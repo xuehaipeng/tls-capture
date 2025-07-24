@@ -1,9 +1,7 @@
-#include <linux/bpf.h>
+#include "simple_bpf_types.h"
+#include "common.h"
 #include <bpf/bpf_helpers.h>
-#include <linux/if_ether.h>
-#include <linux/ip.h>
-#include <linux/tcp.h>
-#include <linux/in.h>
+#include <bpf/bpf_tracing.h>
 
 // Flow key structure
 struct flow_key {
@@ -39,21 +37,21 @@ struct packet_info {
     __u32 seq_num;
     __u32 ack_num;
     __u16 payload_len;
-    __u8 payload[1500];
+    __u8 payload[MAX_PACKET_SIZE];
     __u64 timestamp;
 };
 
 // Maps
 struct {
     __uint(type, BPF_MAP_TYPE_HASH);
-    __uint(max_entries, 1024);
+    __uint(max_entries, MAX_FLOWS);
     __type(key, struct flow_key);
     __type(value, struct flow_state);
 } flow_map SEC(".maps");
 
 struct {
     __uint(type, BPF_MAP_TYPE_HASH);
-    __uint(max_entries, 256);
+    __uint(max_entries, MAX_KEYS);
     __type(key, struct flow_key);
     __type(value, struct ssl_key_info);
 } key_map SEC(".maps");
@@ -62,6 +60,42 @@ struct {
     __uint(type, BPF_MAP_TYPE_RINGBUF);
     __uint(max_entries, 256 * 1024);
 } packet_ringbuf SEC(".maps");
+
+// Tracepoint for SSL_write function
+SEC("uprobe/SSL_write")
+int trace_ssl_write(struct pt_regs *ctx) {
+    // This would extract SSL keys when SSL_write is called
+    // In a real implementation, we would extract the SSL structure
+    // and master secret from the function arguments
+    
+    __u64 pid_tgid = bpf_get_current_pid_tgid();
+    __u32 pid = pid_tgid >> 32;
+    __u32 tid = (__u32)pid_tgid;
+    
+    // For demonstration, we'll just log that SSL_write was called
+    bpf_printk("SSL_write called by PID %d\n", pid);
+    
+    // In a real implementation, we would:
+    // 1. Extract SSL structure from function arguments
+    // 2. Extract master secret and other key material
+    // 3. Store in key_map with appropriate flow key
+    
+    return 0;
+}
+
+// Tracepoint for SSL_read function
+SEC("uprobe/SSL_read")
+int trace_ssl_read(struct pt_regs *ctx) {
+    // This would extract SSL keys when SSL_read is called
+    __u64 pid_tgid = bpf_get_current_pid_tgid();
+    __u32 pid = pid_tgid >> 32;
+    __u32 tid = (__u32)pid_tgid;
+    
+    // For demonstration, we'll just log that SSL_read was called
+    bpf_printk("SSL_read called by PID %d\n", pid);
+    
+    return 0;
+}
 
 SEC("xdp")
 int tls_packet_capture(struct xdp_md *ctx) {

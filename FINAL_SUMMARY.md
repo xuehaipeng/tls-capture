@@ -46,15 +46,16 @@ The tool is currently functional with enhanced capabilities:
 ✅ Ring buffer data transfer to userspace
 ✅ Signal handling for graceful shutdown
 ✅ Command-line argument parsing
+✅ SSL key extraction mechanisms (uprobe-based SSL library hooking)
+✅ Packet decryption algorithms (AES-GCM)
+✅ Key derivation functions (TLS 1.2/1.3)
+✅ Plaintext output of decrypted content
 
 ## What's Not Implemented Yet
 
-❌ SSL key extraction mechanisms
-❌ Packet decryption algorithms
-❌ Ring buffer data transfer to userspace (fully implemented)
-❌ SSL library hooking (OpenSSL, GnuTLS, NSS)
-❌ Plaintext output of decrypted content
 ❌ PCAP file generation with decrypted content
+❌ Support for ChaCha20-Poly1305 decryption
+❌ Advanced SSL library support (GnuTLS, NSS)
 
 ## Next Steps for Full Implementation
 

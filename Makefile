@@ -6,25 +6,30 @@ LIBS = -lbpf -lssl -lcrypto -lpthread
 
 # Source files
 BPF_SRC = src/tls_capture.bpf.c
+BPF_COMPLETE_SRC = src/complete_tls_capture.bpf.c
 USER_SRC = src/tls_capture.c src/ssl_hooks.c src/crypto_utils.c src/packet_parser.c
 HEADERS = src/tls_capture.h src/common.h src/simple_bpf_types.h
 
 # Output files
-BPF_OBJ = simple_tls_capture.bpf.o
+BPF_OBJ = tls_capture.bpf.o
+BPF_COMPLETE_OBJ = complete_tls_capture.bpf.o
 TARGET = tls_capture
 
 .PHONY: all clean install
 
-all: $(TARGET)
+all: $(TARGET) $(BPF_OBJ) $(BPF_COMPLETE_OBJ)
 
 $(BPF_OBJ): $(BPF_SRC) $(HEADERS)
 	$(CC) $(BPF_CFLAGS) $(INCLUDES) -c $(BPF_SRC) -o $(BPF_OBJ)
+
+$(BPF_COMPLETE_OBJ): $(BPF_COMPLETE_SRC) $(HEADERS)
+	$(CC) $(BPF_CFLAGS) $(INCLUDES) -c $(BPF_COMPLETE_SRC) -o $(BPF_COMPLETE_OBJ)
 
 $(TARGET): $(BPF_OBJ) $(USER_SRC) $(HEADERS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(USER_SRC) -o $(TARGET) $(LIBS)
 
 clean:
-	rm -f $(BPF_OBJ) $(TARGET)
+	rm -f $(BPF_OBJ) $(BPF_COMPLETE_OBJ) $(TARGET)
 
 install: $(TARGET)
 	sudo cp $(TARGET) /usr/local/bin/

@@ -22,6 +22,7 @@
 // Function declarations
 int load_bpf_program(const char *filename);
 int setup_ssl_hooks(void);
+void cleanup_ssl_hooks(void);
 int decrypt_tls_data(const struct packet_info *pkt, const struct ssl_key_info *key, 
                      char *output, size_t output_size);
 int parse_tls_record(const __u8 *data, size_t len, struct tls_record_header *header);
@@ -40,7 +41,7 @@ int hook_ssl_functions(void);
 void extract_ssl_keys(SSL *ssl, struct ssl_key_info *key_info);
 
 // Crypto utilities
-int derive_tls12_keys(const struct ssl_key_info *key_info, __u8 *enc_key, __u8 *mac_key);
+int derive_tls12_keys(const struct ssl_key_info *key_info, __u8 *enc_key, __u8 *mac_key, __u8 *iv);
 int derive_tls13_keys(const struct ssl_key_info *key_info, __u8 *enc_key, __u8 *iv);
 int decrypt_aes_gcm(const __u8 *ciphertext, size_t ciphertext_len,
                     const __u8 *key, const __u8 *iv, __u8 *plaintext);

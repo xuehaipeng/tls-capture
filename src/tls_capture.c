@@ -15,6 +15,9 @@ void cleanup_and_exit(int sig) {
     printf("\nShutting down TLS capture tool...\n");
     running = 0;
     
+    // Cleanup SSL hooks
+    cleanup_ssl_hooks();
+    
     // Cleanup ring buffer if it exists
     if (rb) {
         ring_buffer__free(rb);
@@ -78,8 +81,24 @@ int attach_xdp_program(const char *interface) {
         return -1;
     }
     
+    // Try to attach with XDP_FLAGS_UPDATE_IF_NOEXIST first
     int err = bpf_xdp_attach(ifindex, bpf_prog_fd, XDP_FLAGS_UPDATE_IF_NOEXIST, NULL);
-    if (err) {
+    if (err == -EBUSY) {
+        // If busy, try to detach existing program and attach new one
+        printf("XDP program already attached to %s, detaching...\n", interface);
+        err = bpf_xdp_detach(ifindex, XDP_FLAGS_UPDATE_IF_NOEXIST, NULL);
+        if (err) {
+            fprintf(stderr, "Failed to detach existing XDP program from %s: %d\n", interface, err);
+            return -1;
+        }
+        
+        // Now try to attach the new program
+        err = bpf_xdp_attach(ifindex, bpf_prog_fd, XDP_FLAGS_REPLACE, NULL);
+        if (err) {
+            fprintf(stderr, "Failed to attach XDP program to %s after detach: %d\n", interface, err);
+            return -1;
+        }
+    } else if (err) {
         fprintf(stderr, "Failed to attach XDP program to %s: %d\n", interface, err);
         return -1;
     }

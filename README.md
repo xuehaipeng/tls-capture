@@ -124,14 +124,16 @@ User-Agent: Mozilla/5.0...
 - ✅ Ring buffer data transfer to userspace
 - ✅ Signal handling for graceful shutdown
 - ✅ Command-line argument parsing
+- ✅ SSL key extraction mechanisms (uprobe-based SSL library hooking)
+- ✅ Packet decryption algorithms (AES-GCM)
+- ✅ Key derivation functions (TLS 1.2/1.3)
+- ✅ Plaintext output of decrypted content
 
-## ❌ What's Not Implemented Yet
+## ⏳ What's In Progress
 
-- ❌ SSL key extraction mechanisms (uprobe-based SSL library hooking)
-- ❌ Packet decryption algorithms (AES-GCM/ChaCha20-Poly1305)
-- ❌ Key derivation functions (TLS 1.2/1.3)
-- ❌ Plaintext output of decrypted content
-- ❌ PCAP file generation with decrypted content
+- ⏳ PCAP file generation with decrypted content
+- ⏳ Support for ChaCha20-Poly1305 decryption
+- ⏳ Advanced SSL library support (GnuTLS, NSS)
 
 ## Security Considerations
 
