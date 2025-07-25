@@ -17,6 +17,7 @@
 #include <openssl/aes.h>
 #include <openssl/rand.h>
 #include <pthread.h>
+#include <time.h>
 #include "common.h"
 
 // Function declarations
@@ -30,6 +31,10 @@ void print_decrypted_data(const char *data, size_t len);
 const char* get_tls_record_type_name(int type);
 const char* get_tls_version_name(int version);
 void cleanup_and_exit(int sig);
+
+// PCAP file functions
+int save_packet_to_pcap(const struct packet_info *pkt, const char *filename);
+int create_pcap_file(const char *filename);
 
 // Global variables
 extern volatile int running;

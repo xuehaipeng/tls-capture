@@ -47,25 +47,54 @@ void extract_ssl_keys(SSL *ssl, struct ssl_key_info *key_info) {
     // Initialize key info structure
     memset(key_info, 0, sizeof(struct ssl_key_info));
     
-    // In a real implementation, we would extract:
-    // - Master secret from SSL session
-    // - Client and server random values
-    // - Cipher suite information
-    
     const SSL_SESSION *session = SSL_get_session(ssl);
     if (!session) {
         printf("No SSL session found\n");
         return;
     }
     
-    // Extract master secret (in real implementation, this would be done via uprobe)
-    // For demonstration, we'll generate a simulated master secret
-    RAND_bytes(key_info->master_secret, sizeof(key_info->master_secret));
+    // Extract master secret
+    const unsigned char *master_secret_ptr = NULL;
+    size_t master_secret_len = 0;
     
-    // Extract client and server random (in real implementation, this would be done via uprobe)
-    // For demonstration, we'll generate simulated random values
-    RAND_bytes(key_info->client_random, sizeof(key_info->client_random));
-    RAND_bytes(key_info->server_random, sizeof(key_info->server_random));
+    // For OpenSSL 1.1.1 and later
+#if OPENSSL_VERSION_NUMBER >= 0x10101000L
+    unsigned char temp_master_secret[48];
+    master_secret_len = SSL_SESSION_get_master_key(session, temp_master_secret, sizeof(temp_master_secret));
+    master_secret_ptr = temp_master_secret;
+#else
+    // For older versions, we would need to access internal structures
+    // This is not recommended but might be necessary for older OpenSSL versions
+    master_secret_len = SSL_SESSION_get_master_key(session, NULL, 0);
+    if (master_secret_len > 0) {
+        // We can't directly access the master key in older versions without uprobe hooking
+        printf("Warning: Cannot extract master key from older OpenSSL version without uprobe hooking\n");
+        return;
+    }
+#endif
+    
+    if (master_secret_len == 0 || !master_secret_ptr) {
+        printf("Failed to extract master secret\n");
+        return;
+    }
+    
+    // Copy master secret (limit to 48 bytes)
+    size_t copy_len = master_secret_len > 48 ? 48 : master_secret_len;
+    memcpy(key_info->master_secret, master_secret_ptr, copy_len);
+    
+    // Extract client and server random values
+    size_t client_random_len = 0;
+    size_t server_random_len = 0;
+    
+    // For OpenSSL 1.1.1 and later
+#if OPENSSL_VERSION_NUMBER >= 0x10101000L
+    client_random_len = SSL_get_client_random(ssl, key_info->client_random, 32);
+    server_random_len = SSL_get_server_random(ssl, key_info->server_random, 32);
+#else
+    // For older versions, we would need to access internal structures
+    printf("Warning: Cannot extract random values from older OpenSSL version without uprobe hooking\n");
+    return;
+#endif
     
     // Extract cipher suite
     const SSL_CIPHER *cipher = SSL_SESSION_get0_cipher((SSL_SESSION *)session);

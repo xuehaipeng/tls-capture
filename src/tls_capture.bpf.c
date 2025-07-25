@@ -26,8 +26,24 @@ struct {
     __uint(max_entries, 256 * 1024);
 } packet_ringbuf SEC(".maps");
 
+struct {
+    __uint(type, BPF_MAP_TYPE_ARRAY);
+    __uint(max_entries, 1);
+    __type(key, __u32);
+    __type(value, __u64);
+} packet_count SEC(".maps");
+
 SEC("xdp")
 int tls_packet_capture(struct xdp_md *ctx) {
+    // Increment packet counter
+    __u32 key = 0;
+    __u64 *count;
+    
+    count = bpf_map_lookup_elem(&packet_count, &key);
+    if (count) {
+        __sync_fetch_and_add(count, 1);
+    }
+    
     void *data = (void *)(long)ctx->data;
     void *data_end = (void *)(long)ctx->data_end;
     struct ethhdr *eth;
@@ -43,28 +59,42 @@ int tls_packet_capture(struct xdp_md *ctx) {
     struct flow_state new_flow_state = {0};
     struct packet_info *pkt_info;
     
+    // Debug: Print when we receive a packet
+    bpf_printk("BPF: Received packet\n");
+    
     // Parse Ethernet header
     eth = data;
     if (data + sizeof(*eth) > data_end) {
+        bpf_printk("BPF: Ethernet header too large\n");
         return XDP_PASS;
     }
     
     eth_type = eth->h_proto;
+    bpf_printk("BPF: Ethernet type: 0x%x\n", eth_type);
     
-    // Check for IPv4
-    if (eth_type != 0x0800) {  // ETH_P_IP
+    // Check for IPv4 (handle both byte orders)
+    if (eth_type != 0x0800 && eth_type != 0x0008) {  // ETH_P_IP
+        bpf_printk("BPF: Not IPv4, passing packet\n");
         return XDP_PASS;
+    }
+    
+    // Normalize byte order if needed
+    if (eth_type == 0x0008) {
+        eth_type = 0x0800;
     }
     
     // Parse IP header
     ip = data + sizeof(*eth);
     if (data + sizeof(*eth) + sizeof(*ip) > data_end) {
+        bpf_printk("BPF: IP header too large\n");
         return XDP_PASS;
     }
     
     // Check for TCP
     ip_proto = ip->protocol;
+    bpf_printk("BPF: IP protocol: %d\n", ip_proto);
     if (ip_proto != IPPROTO_TCP) {
+        bpf_printk("BPF: Not TCP, passing packet\n");
         return XDP_PASS;
     }
     
@@ -83,11 +113,18 @@ int tls_packet_capture(struct xdp_md *ctx) {
     tcp_source = tcp->source;
     tcp_dest = tcp->dest;
     
-    // Check for HTTPS ports (443, 8443)
+    // Debug: Print TCP ports
+    bpf_printk("BPF: TCP src_port=%d, dst_port=%d\n", tcp_source, tcp_dest);
+    
+    // For debugging, let's capture all TCP traffic first (remove port filtering)
+    // Check for HTTPS ports (443, 8443) or any port for debugging
+    // Actually, let's capture all TCP packets for now
+    /*
     if (tcp_source != 443 && tcp_source != 8443 && 
         tcp_dest != 443 && tcp_dest != 8443) {
         return XDP_PASS;
     }
+    */
     
     // Calculate TCP header length
     __u8 tcp_hdr_len = tcp->doff * 4;
@@ -106,7 +143,10 @@ int tls_packet_capture(struct xdp_md *ctx) {
         return XDP_PASS;
     }
     
+    // For debugging, let's capture all TCP packets first (remove TLS filtering)
     // Check if it looks like TLS (first byte should be a valid TLS record type)
+    // Actually, let's capture all TCP packets for now
+    /*
     __u8 *first_byte = payload;
     if (payload + 1 > data_end) {
         return XDP_PASS;
@@ -116,6 +156,7 @@ int tls_packet_capture(struct xdp_md *ctx) {
     if (*first_byte < 20 || *first_byte > 23) {
         return XDP_PASS;
     }
+    */
     
     // Create flow key
     flow_key.src_ip = ip->saddr;
@@ -137,6 +178,7 @@ int tls_packet_capture(struct xdp_md *ctx) {
     // Reserve space in ring buffer for packet info
     pkt_info = bpf_ringbuf_reserve(&packet_ringbuf, sizeof(struct packet_info), 0);
     if (!pkt_info) {
+        bpf_printk("BPF: Failed to reserve ring buffer space\n");
         return XDP_PASS;
     }
     
@@ -176,6 +218,8 @@ int tls_packet_capture(struct xdp_md *ctx) {
     pkt_info->timestamp = bpf_ktime_get_ns();
     
     // Submit packet to ring buffer
+    bpf_printk("BPF: Sending packet to userspace - src_port=%d, dst_port=%d, len=%d\n", 
+               tcp_source, tcp_dest, copy_len);
     bpf_ringbuf_submit(pkt_info, 0);
     
     // Pass packet to kernel for normal processing

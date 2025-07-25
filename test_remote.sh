@@ -11,7 +11,7 @@ scp -r src root@192.168.64.12:/root/tls-capture-test/
 scp Makefile root@192.168.64.12:/root/tls-capture-test/
 scp README.md root@192.168.64.12:/root/tls-capture-test/
 scp PROJECT_SUMMARY.md root@192.168.64.12:/root/tls-capture-test/
-scp TLS_Traffic_Capture_Tool_Design.md root@192.168.64.12:/root/tls-capture-test/
+scp .specs/technical-design.md root@192.168.64.12:/root/tls-capture-test/
 
 # Build on the remote host
 echo "Building on remote host..."

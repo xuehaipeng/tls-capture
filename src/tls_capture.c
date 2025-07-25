@@ -1,6 +1,8 @@
 #include "tls_capture.h"
 #include <net/if.h>
 #include <linux/if_link.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 // Global variables
 volatile int running = 1;
@@ -112,11 +114,124 @@ void detach_xdp_program(int ifindex) {
     printf("XDP program detached\n");
 }
 
+// PCAP file header structure
+struct pcap_file_header {
+    uint32_t magic_number;   /* magic number */
+    uint16_t version_major;  /* major version number */
+    uint16_t version_minor;  /* minor version number */
+    int32_t  thiszone;       /* GMT to local correction */
+    uint32_t sigfigs;        /* accuracy of timestamps */
+    uint32_t snaplen;        /* max length of captured packets, in octets */
+    uint32_t network;        /* data link type */
+};
+
+// PCAP packet header structure
+struct pcap_packet_header {
+    uint32_t ts_sec;         /* timestamp seconds */
+    uint32_t ts_usec;        /* timestamp microseconds */
+    uint32_t incl_len;       /* number of octets of packet saved in file */
+    uint32_t orig_len;       /* actual length of packet */
+};
+
+// Create a new PCAP file with header
+int create_pcap_file(const char *filename) {
+    FILE *fp = fopen(filename, "wb");
+    if (!fp) {
+        perror("Failed to create PCAP file");
+        return -1;
+    }
+    
+    // Write PCAP file header
+    struct pcap_file_header header = {
+        .magic_number = 0xa1b2c3d4,
+        .version_major = 2,
+        .version_minor = 4,
+        .thiszone = 0,
+        .sigfigs = 0,
+        .snaplen = 65535,
+        .network = 1  // Ethernet
+    };
+    
+    if (fwrite(&header, sizeof(header), 1, fp) != 1) {
+        perror("Failed to write PCAP header");
+        fclose(fp);
+        return -1;
+    }
+    
+    fclose(fp);
+    return 0;
+}
+
+// Save a packet to PCAP file
+int save_packet_to_pcap(const struct packet_info *pkt, const char *filename) {
+    FILE *fp = fopen(filename, "ab");
+    if (!fp) {
+        perror("Failed to open PCAP file for writing");
+        return -1;
+    }
+    
+    // Get current time
+    struct timespec ts;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    
+    // Create Ethernet frame (simplified)
+    // In a real implementation, we would reconstruct the full Ethernet frame
+    // For now, we'll just save the payload with a minimal Ethernet header
+    
+    // Write PCAP packet header
+    struct pcap_packet_header pkt_header = {
+        .ts_sec = ts.tv_sec,
+        .ts_usec = ts.tv_nsec / 1000,
+        .incl_len = pkt->payload_len + 14,  // +14 for Ethernet header
+        .orig_len = pkt->payload_len + 14
+    };
+    
+    if (fwrite(&pkt_header, sizeof(pkt_header), 1, fp) != 1) {
+        perror("Failed to write PCAP packet header");
+        fclose(fp);
+        return -1;
+    }
+    
+    // Write minimal Ethernet header (14 bytes)
+    uint8_t eth_header[14] = {
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // Destination MAC (fake)
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // Source MAC (fake)
+        0x08, 0x00                           // EtherType (IPv4)
+    };
+    
+    if (fwrite(eth_header, sizeof(eth_header), 1, fp) != 1) {
+        perror("Failed to write Ethernet header");
+        fclose(fp);
+        return -1;
+    }
+    
+    // Write packet payload
+    if (fwrite(pkt->payload, pkt->payload_len, 1, fp) != 1) {
+        perror("Failed to write packet payload");
+        fclose(fp);
+        return -1;
+    }
+    
+    fclose(fp);
+    return 0;
+}
+
+// Global variable to store PCAP filename
+static const char *g_pcap_file = NULL;
+
 static int handle_packet(void *ctx, void *data, size_t data_sz) {
     struct packet_info *pkt = (struct packet_info *)data;
     struct ssl_key_info key_info;
     char decrypted_data[MAX_PACKET_SIZE];
     int ret;
+    
+    // Debug: Print when we receive a packet in userspace
+    printf("Userspace: Received packet from ring buffer - len=%zu\n", data_sz);
+    
+    // Save packet to PCAP file if specified
+    if (g_pcap_file) {
+        save_packet_to_pcap(pkt, g_pcap_file);
+    }
     
     // Print basic packet info
     printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
@@ -135,8 +250,11 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
                get_tls_record_type_name(tls_hdr.type),
                get_tls_version_name(tls_hdr.version),
                tls_hdr.length);
-    }
-    
+        
+        // Try to decrypt and parse HTTP content if this is application data
+        if (tls_hdr.type == TLS_APPLICATION_DATA) {
+            printf("🔍 TLS Application Data detected (potential HTTP content)\n");
+            
     // Look up SSL keys for this flow (only if key_map exists)
     if (key_map_fd >= 0) {
         ret = bpf_map_lookup_elem(key_map_fd, &pkt->flow, &key_info);
@@ -144,13 +262,77 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
             // Attempt to decrypt the packet
             ret = decrypt_tls_data(pkt, &key_info, decrypted_data, sizeof(decrypted_data));
             if (ret > 0) {
-                printf("Decrypted data (%d bytes):\n", ret);
-                print_decrypted_data(decrypted_data, ret);
+                printf("🔓 Decrypted TLS data (%d bytes):\n", ret);
+                
+                // Check if decrypted data looks like HTTP
+                if (ret > 4 && (strncmp((char*)decrypted_data, "GET ", 4) == 0 || 
+                               strncmp((char*)decrypted_data, "POST", 4) == 0 ||
+                               strncmp((char*)decrypted_data, "HTTP", 4) == 0 ||
+                               strncmp((char*)decrypted_data, "HEAD", 4) == 0 ||
+                               strncmp((char*)decrypted_data, "PUT ", 4) == 0 ||
+                               strncmp((char*)decrypted_data, "DELE", 4) == 0)) {
+                    printf("🌐 HTTP Traffic Detected:\n");
+                    printf("=== HTTP CONTENT ===\n");
+                    // Print HTTP headers and body
+                    for (int i = 0; i < ret && i < 1024; i++) {
+                        putchar(decrypted_data[i]);
+                        if (i > 4 && decrypted_data[i-3] == '\r' && decrypted_data[i-2] == '\n' &&
+                            decrypted_data[i-1] == '\r' && decrypted_data[i] == '\n') {
+                            // End of HTTP headers, add separator before body
+                            printf("\n--- HTTP BODY ---\n");
+                        }
+                    }
+                    if (ret > 1024) {
+                        printf("\n... (truncated, %d more bytes)\n", ret - 1024);
+                    }
+                    printf("\n=== END HTTP CONTENT ===\n");
+                } else {
+                    // Not HTTP, show as generic decrypted data
+                    print_decrypted_data((char*)decrypted_data, ret);
+                }
             } else {
-                printf("Failed to decrypt packet\n");
+                printf("❌ Failed to decrypt packet (possibly wrong keys or encrypted with different parameters)\n");
+                // Still show raw TLS data for debugging
+                printf("Raw TLS data (first 64 bytes):\n");
+                for (int i = 0; i < pkt->payload_len && i < 64; i++) {
+                    printf("%02x ", pkt->payload[i]);
+                    if ((i + 1) % 16 == 0) printf("\n");
+                }
+                printf("\n");
             }
         } else {
             printf("No SSL keys found for this flow\n");
+            // For debugging, let's try to decrypt with a mock key to see if the decryption logic works
+            // This is just for demonstration purposes
+            /*
+            struct ssl_key_info mock_key = {0};
+            mock_key.valid = 1;
+            // Fill with fake key data for testing
+            for (int i = 0; i < 48; i++) {
+                mock_key.master_secret[i] = i;
+            }
+            for (int i = 0; i < 32; i++) {
+                mock_key.client_random[i] = i;
+                mock_key.server_random[i] = i + 32;
+            }
+            mock_key.cipher_suite = 0x1301; // TLS_AES_128_GCM_SHA256
+            
+            // Attempt to decrypt with mock key
+            ret = decrypt_tls_data(pkt, &mock_key, decrypted_data, sizeof(decrypted_data));
+            if (ret > 0) {
+                printf("🔓 Decrypted TLS data with mock key (%d bytes):\n", ret);
+                print_decrypted_data((char*)decrypted_data, ret);
+            } else {
+                printf("❌ Failed to decrypt packet with mock key\n");
+                // Print raw TLS data for debugging
+                printf("Raw TLS data (first 64 bytes):\n");
+                for (int i = 0; i < pkt->payload_len && i < 64; i++) {
+                    printf("%02x ", pkt->payload[i]);
+                    if ((i + 1) % 16 == 0) printf("\n");
+                }
+                printf("\n");
+            }
+            */
             // Print raw TLS data for debugging
             printf("Raw TLS data (first 64 bytes):\n");
             for (int i = 0; i < pkt->payload_len && i < 64; i++) {
@@ -168,6 +350,16 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
         }
         printf("\n");
     }
+        }
+    } else {
+        // If no TLS record header, just print raw data
+        printf("Raw data (first 64 bytes):\n");
+        for (int i = 0; i < pkt->payload_len && i < 64; i++) {
+            printf("%02x ", pkt->payload[i]);
+            if ((i + 1) % 16 == 0) printf("\n");
+        }
+        printf("\n");
+    }
     
     printf("----------------------------------------\n");
     return 0;
@@ -179,20 +371,22 @@ void print_usage(const char *prog_name) {
     printf("  -i <interface>  Network interface to capture on (default: eth0)\n");
     printf("  -f <bpf_file>   BPF object file (default: tls_capture.bpf.o)\n");
     printf("  -p <pid>        Process ID to hook for SSL keys\n");
+    printf("  -w <file>       Write captured packets to PCAP file\n");
     printf("  -h              Show this help message\n");
     printf("\nExample:\n");
-    printf("  sudo %s -i eth0 -p 1234\n", prog_name);
+    printf("  sudo %s -i eth0 -p 1234 -w capture.pcap\n", prog_name);
 }
 
 int main(int argc, char **argv) {
     const char *interface = "eth0";
     const char *bpf_file = "tls_capture.bpf.o";
+    const char *pcap_file = NULL;
     pid_t target_pid = 0;
     int opt;
     int ifindex = -1;
     
     // Parse command line arguments
-    while ((opt = getopt(argc, argv, "i:f:p:h")) != -1) {
+    while ((opt = getopt(argc, argv, "i:f:p:w:h")) != -1) {
         switch (opt) {
             case 'i':
                 interface = optarg;
@@ -202,6 +396,9 @@ int main(int argc, char **argv) {
                 break;
             case 'p':
                 target_pid = atoi(optarg);
+                break;
+            case 'w':
+                pcap_file = optarg;
                 break;
             case 'h':
                 print_usage(argv[0]);
@@ -227,6 +424,16 @@ int main(int argc, char **argv) {
     printf("BPF file: %s\n", bpf_file);
     if (target_pid > 0) {
         printf("Target PID: %d\n", target_pid);
+    }
+    if (pcap_file) {
+        printf("PCAP file: %s\n", pcap_file);
+        // Create PCAP file with header
+        if (create_pcap_file(pcap_file) < 0) {
+            fprintf(stderr, "Failed to create PCAP file\n");
+            return 1;
+        }
+        // Set global PCAP file variable
+        g_pcap_file = pcap_file;
     }
     printf("----------------------------------------\n");
     

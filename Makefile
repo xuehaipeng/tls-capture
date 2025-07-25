@@ -2,7 +2,7 @@ CC = clang
 CFLAGS = -O2 -g -Wall -Wextra
 BPF_CFLAGS = -O2 -g -target bpf -D__TARGET_ARCH_arm64 -D__BPF_TRACING__
 INCLUDES = -I/usr/include -I/usr/include/aarch64-linux-gnu -Isrc -I/usr/include/arm-linux-gnueabihf
-LIBS = -lbpf -lssl -lcrypto -lpthread
+LIBS = -lbpf -lssl -lcrypto -lpthread -lpcap
 
 # Source files
 BPF_SRC = src/tls_capture.bpf.c
@@ -35,6 +35,8 @@ check-deps:
 	@which clang > /dev/null || (echo "clang not found" && exit 1)
 	@test -f /usr/include/bpf/libbpf.h || (echo "libbpf headers not found" && exit 1)
 	@test -f /usr/include/openssl/ssl.h || (echo "openssl headers not found" && exit 1)
+	@test -f /usr/include/pcap.h || (echo "libpcap headers not found" && exit 1)
 	@test -f /usr/lib/*/libbpf.so || test -f /usr/lib64/libbpf.so || (echo "libbpf library not found" && exit 1)
 	@test -f /usr/lib/*/libssl.so || test -f /usr/lib64/libssl.so || (echo "openssl library not found" && exit 1)
+	@test -f /usr/lib/*/libpcap.so || test -f /usr/lib64/libpcap.so || (echo "libpcap library not found" && exit 1)
 	@echo "All dependencies found"
