@@ -33,6 +33,13 @@ struct {
     __type(value, __u64);
 } packet_count SEC(".maps");
 
+struct {
+    __uint(type, BPF_MAP_TYPE_ARRAY);
+    __uint(max_entries, 1);
+    __type(key, __u32);
+    __type(value, __u16);
+} port_filter SEC(".maps");
+
 SEC("xdp")
 int tls_packet_capture(struct xdp_md *ctx) {
     // Increment packet counter
@@ -69,18 +76,13 @@ int tls_packet_capture(struct xdp_md *ctx) {
         return XDP_PASS;
     }
     
-    eth_type = eth->h_proto;
-    bpf_printk("BPF: Ethernet type: 0x%x\n", eth_type);
+    eth_type = __builtin_bswap16(eth->h_proto);
+    bpf_printk("BPF: Ethernet type: 0x%x (raw: 0x%x)\n", eth_type, eth->h_proto);
     
-    // Check for IPv4 (handle both byte orders)
-    if (eth_type != 0x0800 && eth_type != 0x0008) {  // ETH_P_IP
+    // Check for IPv4
+    if (eth_type != 0x0800) {  // ETH_P_IP
         bpf_printk("BPF: Not IPv4, passing packet\n");
         return XDP_PASS;
-    }
-    
-    // Normalize byte order if needed
-    if (eth_type == 0x0008) {
-        eth_type = 0x0800;
     }
     
     // Parse IP header
@@ -109,22 +111,31 @@ int tls_packet_capture(struct xdp_md *ctx) {
         return XDP_PASS;
     }
     
-    // Get TCP ports
-    tcp_source = tcp->source;
-    tcp_dest = tcp->dest;
+    // Get TCP ports (convert from network byte order)
+    tcp_source = __builtin_bswap16(tcp->source);
+    tcp_dest = __builtin_bswap16(tcp->dest);
     
     // Debug: Print TCP ports
     bpf_printk("BPF: TCP src_port=%d, dst_port=%d\n", tcp_source, tcp_dest);
     
-    // For debugging, let's capture all TCP traffic first (remove port filtering)
-    // Check for HTTPS ports (443, 8443) or any port for debugging
-    // Actually, let's capture all TCP packets for now
-    /*
-    if (tcp_source != 443 && tcp_source != 8443 && 
-        tcp_dest != 443 && tcp_dest != 8443) {
-        return XDP_PASS;
+    // Check port filter map
+    __u32 filter_key = 0;
+    __u16 *target_port = bpf_map_lookup_elem(&port_filter, &filter_key);
+    
+    if (target_port && *target_port != 0) {
+        // Port filter is set, only capture traffic on specified port
+        if (tcp_source != *target_port && tcp_dest != *target_port) {
+            return XDP_PASS;  // Skip non-target ports
+        }
+        // Port matches, continue processing
+    } else {
+        // No port filter, default to HTTPS ports (443, 8443)
+        if (tcp_source != 443 && tcp_source != 8443 && 
+            tcp_dest != 443 && tcp_dest != 8443) {
+            return XDP_PASS;  // Skip non-HTTPS ports
+        }
+        // HTTPS port detected, continue processing
     }
-    */
     
     // Calculate TCP header length
     __u8 tcp_hdr_len = tcp->doff * 4;
@@ -139,9 +150,10 @@ int tls_packet_capture(struct xdp_md *ctx) {
     }
     
     payload_len = data_end - payload;
-    if (payload_len == 0) {
-        return XDP_PASS;
-    }
+    // Allow zero-payload packets for HTTPS handshakes and control packets
+    // if (payload_len == 0) {
+    //     return XDP_PASS;
+    // }
     
     // For debugging, let's capture all TCP packets first (remove TLS filtering)
     // Check if it looks like TLS (first byte should be a valid TLS record type)
@@ -200,7 +212,7 @@ int tls_packet_capture(struct xdp_md *ctx) {
         copy_len = MAX_PACKET_SIZE;
     }
     
-    // Ensure copy_len is within valid range
+    // Handle payload copying (including zero-length payloads)
     if (copy_len > 0 && copy_len <= MAX_PACKET_SIZE) {
         // Use bpf_probe_read_kernel for safer memory access
         long ret = bpf_probe_read_kernel(pkt_info->payload, copy_len, payload);
@@ -208,7 +220,11 @@ int tls_packet_capture(struct xdp_md *ctx) {
             bpf_ringbuf_discard(pkt_info, 0);
             return XDP_PASS;
         }
+    } else if (copy_len == 0) {
+        // Zero-length payload is acceptable (handshake, control packets)
+        // No need to copy payload data
     } else {
+        // Invalid copy_len
         bpf_ringbuf_discard(pkt_info, 0);
         return XDP_PASS;
     }

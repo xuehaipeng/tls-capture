@@ -1,0 +1,2380 @@
+libbpf: Kernel error message: XDP program already attached
+TLS Traffic Capture Tool
+Interface: eth0
+BPF file: tls_capture.bpf.o
+Target Port: 443
+----------------------------------------
+BPF program loaded successfully
+XDP program already attached to eth0, detaching...
+XDP program attached to interface eth0
+Port filter set to: 443
+Setting up SSL hooks and SSLKEYLOGFILE monitoring...
+Setting up SSL hooks for key extraction...
+OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+Successfully loaded SSL library
+Set SSLKEYLOGFILE to: /tmp/sslkeylog.txt
+📝 To capture keys, run your HTTPS client with: SSLKEYLOGFILE=/tmp/sslkeylog.txt <your_command>
+Reading SSLKEYLOG file: /tmp/sslkeylog.txt
+Parsed SSLKEYLOG entry: CLIENT_RANDOM 5c867c2201396c94f5f1f7f1956e70ad19b0568e415684f1204079a21f964676
+✅ Stored SSL keys from SSLKEYLOGFILE
+Parsed SSLKEYLOG entry: CLIENT_RANDOM 24fd34704f6f6c809e23388309e4d6ae4b814fb73e2d2550b1212fd47427f720
+✅ Stored SSL keys from SSLKEYLOGFILE
+Parsed SSLKEYLOG entry: CLIENT_RANDOM 19ec26a9f9269a03cef0c03b28276f37bd27684be86a39540382eba5c1af0aa8
+✅ Stored SSL keys from SSLKEYLOGFILE
+Parsed SSLKEYLOG entry: CLIENT_RANDOM 87001f8453cee5cf4af65a48402c7f3e16a627e1454dd53a5cce0fd668875fab
+✅ Stored SSL keys from SSLKEYLOGFILE
+Parsed SSLKEYLOG entry: CLIENT_RANDOM a4a1194bd3e7a2b590fe9848115e3a4d4d70a23a65fb1728da1d1dc8716ec0d9
+✅ Stored SSL keys from SSLKEYLOGFILE
+Parsed SSLKEYLOG entry: CLIENT_RANDOM b4a9d4c76a3a0f32d6b8dcde3067b8571348455211e5c6135ef845dd97c12bc6
+✅ Stored SSL keys from SSLKEYLOGFILE
+Loaded 6 SSL keys from SSLKEYLOGFILE
+✅ SSLKEYLOGFILE monitoring setup complete
+Starting packet capture... Press Ctrl+C to stop
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:2758, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 5c 4b 9e a4 89 06 e7 2a a8 be a5 
+4a 2b 98 dd 1a af cb bb fc 36 1b 1a 65 d3 ae 4e 
+1f fc b2 85 56 ed 37 b3 24 0e 12 a0 ce fa d3 85 
+dd 33 30 9d 60 44 3d 10 55 a2 d4 b0 2c 5d 70 f9 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=1448
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=122
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=1387
+TLS Record: Type=Unknown, Version=Unknown, Length=16592
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:9414, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:13510, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6342, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12998, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3782, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:17606, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18118, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:20678, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:23238, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3782, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 eb 96 7b b5 d1 5e 05 b4 a7 d1 4e 
+36 9e b2 82 e1 ce 23 c0 6f 0c 72 b8 26 e6 91 20 
+43 0a 36 8e 25 3d c8 ce 8f 4f 05 82 d9 61 66 f9 
+af 8c 57 39 9e eb b8 2b e8 a1 81 5b 86 61 17 e5 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:9414, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 19 80 00 1d 10 93 43 a5 53 c6 e0 
+32 02 99 b0 ec 8e 4d 7f 66 aa 4b d5 d3 dd 79 8e 
+27 33 4f e6 cc 02 e2 78 64 83 3a 82 37 8d 1e 7c 
+2c df a1 95 0a 37 d8 ac dc a6 f2 54 9d f2 67 2b 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:13510, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 32 4d e0 95 a6 c7 64 2d 8e db 60 
+bb 40 79 84 38 c1 22 bd 96 1b 16 4e 3a 14 14 8d 
+ab b3 4a e1 e2 c6 4a d5 4a ac 25 88 12 cd f7 8b 
+f9 d1 01 36 23 98 65 2e 8c 0b b1 76 04 04 05 67 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6342, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 b0 f0 fe cc b3 3f 46 f4 a5 2b 38 
+14 5a 29 10 9e 8a 27 f6 ab 81 70 7f 3b 38 ba ce 
+64 78 60 c9 c7 1b 63 c2 54 d5 41 ba 57 9f 66 1e 
+03 19 a9 56 f9 8c be cc 70 e2 fc 56 28 42 8e 5a 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12998, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 37 37 78 55 cc 18 37 ad 88 a6 b4 
+9f 66 f2 4b be e5 2d bb 77 38 5b e2 9f ff 73 08 
+e2 ed b2 19 b0 b0 2e bf a9 fe 4e 64 aa c3 80 38 
+db ff 0d c6 b3 1d 99 32 3c ff 27 75 3d a2 98 b3 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:17606, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 82 9a 72 5c ea 8e a8 e2 58 f2 e9 
+98 ee 78 eb ea 93 61 56 8a ee c5 ca 12 ed 1e 07 
+58 6e 4b 0d eb 0f c2 d6 54 29 3d 5e f9 df b4 8c 
+91 1c 0c 8f 8b 73 2a 0a 39 30 d9 e8 7f 4b 21 a9 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:24262, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:26310, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18118, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 99 f7 dd 0c 98 59 79 8b b3 5a 9e 
+55 7b d4 71 81 a9 18 ac 41 98 43 3e eb d8 90 39 
+6b 04 02 17 27 af e6 5f f9 fe 3f 82 a3 39 a6 78 
+19 d6 42 a3 d8 74 b7 27 c0 43 db 5e e3 68 83 67 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:27334, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:30406, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:31430, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:31942, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:23238, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 7a a3 9b 6e 46 6d 44 87 e6 cc 6e 
+83 6c e1 72 0f 99 9d 67 f0 86 cf 78 b5 62 9f c2 
+bd 7d f4 7b f4 33 9f 42 24 2e df dd a1 c9 2b f0 
+c8 2e 6a bc 9e cf 5d 19 17 37 28 10 51 45 4b e7 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:20678, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 ad 01 1f bd f0 f0 cd 46 2a ce c6 
+12 2c 90 f5 f0 f6 62 99 e6 44 03 0d c8 68 ce c2 
+12 08 b7 ba fd bb 70 b8 6b 20 90 06 44 8f 7a d4 
+8e 48 91 a9 3e ae 59 31 84 51 f6 a7 2b 23 19 3e 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:35014, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:35526, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:27334, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 7d 02 e0 b6 a1 cd b6 fa 8b 01 0a 
+8f bd c9 b1 07 e8 2d ac 45 9e 44 21 18 8f 5c 98 
+1f 73 9a 52 cf eb f0 08 61 aa d3 c0 81 6a ab de 
+29 4d bc 2e 5e 6f 9f 21 82 4c e6 38 e8 30 c6 e4 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:24262, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 30 2e 88 55 bd d0 c3 77 98 5b 6b 
+b7 c9 2b 0b 3d 55 88 76 1d 6c dc 01 6d ec 6c ee 
+bf 59 38 70 96 67 54 c6 69 53 83 cb d4 38 11 9e 
+87 d6 37 30 98 25 40 ea 99 c8 eb 4a 8b 5d 64 b3 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:26310, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 9a 19 8f 35 43 b9 41 94 52 6f b1 
+e0 7b e4 50 91 08 5a ea bd 71 76 68 56 d9 1d 45 
+98 7f 97 e4 d9 f5 aa 34 e4 1b 06 54 9a eb e2 18 
+09 ef 9c 7c 41 30 92 8e 90 0b 03 f4 fe 16 0c d7 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:30406, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 43 9a dc 0a 55 e2 a4 5e 0e 3e 09 
+65 d6 51 db d5 21 05 64 a1 c2 72 89 4c b6 a1 ff 
+a8 02 0c 82 c1 1d 1a 18 00 39 40 6e 8e 4b b7 b3 
+8a d9 ee 02 14 f6 28 27 39 88 68 35 8b da 4d 3d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:31942, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 9d e9 5d 81 71 87 5c 30 32 31 79 
+de ee cf d6 db 28 4a bc 13 77 0a ec 2d 60 13 cc 
+fb e6 5d 17 5c 45 5a 85 09 b3 25 1c e4 6d 02 5b 
+97 83 5f 5c 0a 89 58 11 9c 82 6f f1 0e 49 09 07 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:31430, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 56 d3 6a 31 5c 28 b6 ca 1f a4 a1 
+47 6c 6b aa 7b fe 1a d9 a4 90 fc 03 eb b8 78 4e 
+ea cc cd a4 aa 46 07 51 2b 29 ef 7e 74 dd c8 8a 
+25 cf 5a 1d 7d df f1 ee bc 15 8b fe 60 4c e1 c3 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:35526, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 e2 30 42 13 9d fd a6 9d 70 98 a5 
+52 88 38 11 c6 b1 1b c4 78 0b c1 e4 67 f6 c3 70 
+80 11 21 22 fa 8d e6 0b 97 07 c4 be 9a fa dc 28 
+b3 13 77 a2 e8 72 6d d8 70 4e 34 41 7a ae bc e3 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18595, len=1375
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=1216
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:35014, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 8b 7b 8a 7a f2 5e 10 6f 31 e8 16 
+4f 84 26 10 23 bc 3f 62 b3 3d 44 86 66 2f 9b e3 
+eb ef 40 17 3c 2a 03 00 b0 f7 68 97 4a 7f 11 34 
+02 9e ba 17 9a 5b 77 54 4f e3 26 b1 bb ea c1 11 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18595, len=528
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=461
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 cd 93 17 64 3b 6b 1f d1 dc 51 da 67 
+eb 67 9b 92 b7 6a 0c fe b0 41 f4 6c 76 18 48 f6 
+03 49 05 ff bc 40 60 a4 2c ea 5a 78 ab 58 b2 7d 
+ee ee 27 2d 37 0e 1f f3 c3 39 96 5e 09 9f 4c c3 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18595, len=31
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=26
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 1a eb 06 c5 6d a8 37 79 a9 96 89 c7 
+17 ec 66 6a f8 6b f4 15 e3 0b 9c fa 66 09 c7 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18595, len=31
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=26
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 1a eb 06 c5 6d a8 37 79 a9 96 89 c7 
+17 ec 66 6a f8 6b f4 15 e3 0b 9c fa 66 09 c7 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d 09 46 b7 ea b8 3d d4 ec 4e 82 61 
+37 4b af 0a 1c b3 23 2a 58 ee 63 da f0 68 e9 67 
+66 d7 90 43 25 f2 d7 e8 8d f8 6c 5e 12 96 0c 76 
+4d ba 89 63 2a 78 ff a5 85 3c eb 83 ef a5 81 b0 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:33515, len=1448
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=67
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:33515, len=1273
+TLS Record: Type=Unknown, Version=Unknown, Length=50538
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:33515, len=258
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=202
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:33515, len=537
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=532
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 14 00 00 00 00 00 00 00 01 80 5c e5 
+7b b3 7c fa a0 30 48 ba b0 d8 84 a5 31 5a 3e 24 
+48 cb 47 3a c3 f5 b3 30 50 7e 55 6c 2c e3 fb 27 
+b7 2e fd 60 22 90 b5 61 08 c8 b4 c3 44 98 8f b7 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=1448
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=477
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 dd 68 1d d0 08 0f 13 91 3b 89 ec 4e 
+6c e8 6b c4 99 83 cc fb bc 8c f8 81 40 65 12 4b 
+ba d7 0e 71 59 8d 14 9f 58 40 1b 7c 6f d5 04 b8 
+55 c5 59 fa f4 b4 04 e5 67 ea 0e b3 81 68 0c a1 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=206
+TLS Record: Type=Unknown, Version=Unknown, Length=38674
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18595, len=423
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=418
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 a2 d0 fa f4 8c b5 0f c7 0b e9 17 71 
+a7 2b c7 fe ab 7d a6 29 12 66 88 6c 51 22 8e 14 
+f9 42 6f 81 44 ed 25 d8 f2 ee dd 52 c1 d6 65 bc 
+9a 8b b0 25 25 13 94 cb 06 65 58 c6 d9 92 3b 3d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18595, len=816
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=811
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 03 2b b9 16 2b 47 d6 3d ca 42 de 51 ca 
+9b 60 4f 7e 41 f8 3a 0a 1e e7 d5 a7 fa 1f 1b ef 
+32 43 76 af 02 9c 22 84 d1 99 f2 8f 4d d8 db a7 
+a2 f7 f2 12 87 97 02 a4 06 38 63 93 7e af f1 5d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18595, len=31
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=26
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 1a 15 f3 84 00 d9 64 20 5f 6b fd c5 
+21 df f7 e3 cf 3f 33 1b ec d9 26 d0 49 08 cc 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=333
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=328
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 48 03 6d ab a4 34 60 38 e4 dc c6 66 
+b9 4f 42 5a cb 8a 03 10 3d 4b 58 c3 82 24 1d 33 
+83 61 5b 11 43 43 48 8b 56 a9 80 a0 a0 b0 67 ac 
+87 9f c2 dc f8 fd 39 63 7b 97 2a d3 1f 2b 0b d0 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=157
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=152
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 98 92 48 d2 cd 9f c5 da 6f 2f a5 98 
+4e 32 9d b9 45 30 04 0a be 25 4b 8a d9 f4 ab 57 
+7e f9 70 d3 80 f8 55 cf 9a fd 15 00 ef 18 26 ad 
+d8 d9 86 81 c0 4d 11 97 de c1 10 c9 fd db 12 e6 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=175
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=170
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 aa 46 ac 38 fd f2 fb e0 af 4c 0d 0d 
+8b 4d 93 44 ec 37 f4 bb 74 29 1e ee 56 54 76 8e 
+11 ea 31 76 f6 4f 9d a9 e2 1a 8e 75 78 2e 33 8f 
+da 6a 84 d3 76 04 5f 9e ae 5d 83 65 05 6f dc c4 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=168
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=163
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a3 ee c9 fd e9 1f af f6 d9 c2 69 b1 
+b3 fe 14 73 5f fd cc 60 1c 5e 5e b5 80 b6 ee 4f 
+db b3 e2 e0 d1 8e 4c 14 cd de 6e 5a 83 cb a7 c1 
+43 98 e0 c7 5e 47 f3 53 7c ab 18 81 73 a2 7b 99 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=172
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=167
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a7 47 24 70 ff ce 91 c1 08 03 20 1b 
+44 36 82 72 5d f1 b0 86 a8 50 5b 31 51 ca 36 98 
+7e 26 d2 a8 78 b4 79 e2 55 a2 24 30 7c 43 b1 dc 
+9c e2 e9 e8 e2 47 c6 95 09 6b aa 29 6a 18 f5 6a 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=166
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=161
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a1 9e 1a ad 30 8c 7e 83 a1 49 5e 32 
+18 d2 fa 50 8a 6c 1f ef 62 4f 31 29 30 86 66 35 
+94 82 e9 1b f2 32 29 42 27 03 cb 77 3d d1 a2 1b 
+44 6a 37 09 b3 b7 b7 95 7b 4c 48 e0 c5 b6 d1 10 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:32476, len=24
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=19
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 13 b3 a7 70 de e0 49 27 3b 55 18 fc 
+63 80 aa f2 b3 6d 3f 7f 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=158
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=153
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 99 1b 4a ee d4 c0 5d e7 23 2a 99 41 
+40 af 89 17 df 98 0b f3 d6 f7 ee e2 73 22 ad 1a 
+f9 35 63 09 ed 24 f5 61 b0 1c 97 a0 d7 99 d8 dc 
+24 05 aa db 08 3f de 4e d8 bb a6 a5 cb fa 85 c4 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=316
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=311
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 37 00 ce 90 35 fc d9 b6 5a 72 76 dc 
+d0 8e e6 51 30 5b 02 8a ae 2a be fd e8 22 13 af 
+17 0a 0b f7 93 51 3d dd ff ec 1f 07 b2 2f 09 fd 
+5d 3d ea bd b8 20 69 ac 63 f9 98 24 ef 43 20 1c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 c8 34 23 49 04 08 bd 32 3e ed 92 
+51 d5 e6 57 c7 61 43 e6 21 57 f2 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 70 ec 69 27 22 0b 50 e0 bc 73 ea 
+b7 90 b1 8e 37 c6 b1 42 de ed 07 b6 1b f6 e3 e3 
+f7 72 58 50 fe c9 63 ca 9e 5c 3a 8e 75 65 57 47 
+50 f9 2f 4f 82 d7 ec 0f 83 ab 71 45 01 3d be 21 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c e6 ff 33 7b 3b 64 52 df 93 05 e8 
+41 3e 97 0c 15 02 66 eb 8f af 58 07 5f 76 69 f7 
+7b 45 df 39 16 53 e8 ad 02 51 2f 97 f3 53 73 6a 
+75 01 20 a6 ac 8c 99 56 09 73 80 8f dc f0 ae 8e 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1171
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1166
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8e e0 be ab a2 39 73 8b b0 2e e6 b4 
+ea c8 f5 76 87 71 bb d6 46 dc 8c e5 05 86 e1 26 
+01 46 0f b1 1c ed b0 fe 91 2c 8a 5c 9a 6b 41 06 
+2a 30 85 91 9a 41 d6 0e d6 7a af 09 0c 45 63 cc 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=203
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=198
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 c6 60 57 3f b9 01 fd 41 da c6 6a 78 
+7f 29 b0 65 6b 86 5f d8 19 ee 79 9e c0 ce d9 fb 
+49 a8 a1 64 a2 2c db d8 9d 94 ec c6 5c 54 c8 f6 
+14 bd 43 12 c7 15 0a 8b 49 82 9b 0e c8 a1 42 40 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=64
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=59
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 3b 77 f7 01 c7 16 c1 53 b1 ca 65 02 
+3c 88 03 26 2d 0f 89 cb 30 ad c1 ff 76 3c 57 9f 
+17 ab be 13 40 4f b5 5e 9b 1d 24 ae 2a 7d 98 35 
+e2 a6 a3 9c d5 2f 64 4c ae bc 2d 6e 04 6d 34 db 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=169
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=164
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a4 4c 80 ff 02 46 5f be 64 a9 c6 66 
+42 51 0e 39 ec 4b c2 1e f7 70 d6 35 eb 13 fe e1 
+03 15 9e 34 1e 12 d6 27 db a6 38 3a e6 4d b8 40 
+94 8f ab 7d 31 ef 36 2a 88 b3 15 56 fa 62 94 df 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=1207
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=797
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 03 1d 94 73 8c b4 66 d8 1e 9c 28 3d c7 
+ee 80 a8 f6 60 07 12 22 e0 92 06 a4 82 ff 86 b8 
+20 cf 9d 32 2d 43 67 9b 17 56 b2 99 86 c7 42 f3 
+92 29 22 2e 6e 3c 95 01 34 a4 dc ff d7 23 34 ed 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1169
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1164
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8c 89 51 c1 14 81 7f c2 af 51 30 3b 
+54 51 f4 47 5e 08 8e b0 27 ef d9 85 86 de fb e5 
+44 28 33 3d 11 1a 31 ce d7 48 91 9f 76 ef 7e 28 
+8d bf 24 36 2a 44 fe e6 48 b4 5e 86 29 7c cb 0d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=255
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=250
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 fa ba bb 75 a2 ab 38 38 3d 41 de 20 
+44 a9 b4 9e 2c 12 9f dc 48 c8 5a 21 d3 eb a9 22 
+4a ed a2 fa f6 0b a6 b4 e8 b5 ed a9 b6 81 43 fb 
+c1 56 29 34 a6 8e 1c 33 42 33 36 92 3f 36 73 ee 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=183
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=178
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 b2 ab 49 64 c4 95 73 c1 76 ae ac 52 
+6b f1 6d db ba 9f 56 c5 6c 0d 2c 34 8d 2a df 61 
+ac 71 86 1b ab f0 71 38 f8 b6 05 01 95 43 79 90 
+99 4a 79 76 25 53 6b 2f 01 e1 8c db 99 94 c3 9a 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:31452, len=25
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=20
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 14 94 ae b7 ff d1 15 01 bb 2c 89 7c 
+b7 29 44 72 df ee 47 b3 2b 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=666
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=661
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 95 e6 28 bc 87 f2 c4 94 e9 98 c4 bc 
+8f 44 5f 11 5b fa f4 4c 4b 57 24 bc ae ee d1 7d 
+56 ca 1a 11 67 64 89 6e 13 3e 4d 22 98 10 cc eb 
+0e 94 86 5e b9 de b5 51 dc 53 4a dd de 65 ec bd 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50825, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 c6 b7 97 98 fc 67 06 e5 04 24 8e 
+5d 1e c5 33 ee 15 ea 67 0f 04 2e 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 8c 9b ac 8a c3 9a b2 37 2d 9a 0d 
+6e 98 54 1f ab 0e cf 0d cb 8f fa 5a 34 a5 f9 c5 
+de 6c 59 11 53 6a 7a aa 1f e8 95 9f 30 6d c9 34 
+8c 89 98 87 48 b4 4b 7a 5e 18 e7 19 d1 32 55 98 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6342, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c a2 c0 65 c0 ce 4e cf f1 18 b4 03 
+74 3e 84 24 38 09 67 af 3c 59 e3 5c 4e f1 32 ee 
+34 29 0f 1b 7a e7 65 72 de de 17 65 9d ca 14 0a 
+c8 45 01 3b cd 85 b0 1f 12 0f 1b c3 0f b4 71 75 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 8c 27 c3 08 18 e0 a4 69 31 4a 81 
+90 0b 6f e1 c5 d6 d6 96 74 be 93 04 5d bc 21 66 
+3f f1 7b db 7e 17 98 ec 64 4c bf b4 3d 40 dc fe 
+08 32 3e 69 ae 81 5e 9a 0c e5 eb 2e 8d 22 5f c6 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:9907, len=24
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=19
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 13 87 c6 1d ed f3 be e8 56 a1 fc cf 
+45 3e 11 1e ca 9d ff 9c 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:2758, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 57 b2 a4 21 c1 7d 77 9e 73 fa 24 
+89 5e 24 ac cf 9f a8 82 3a 2f 4f 85 dc 47 fb 53 
+82 79 53 ba f9 b4 55 cb 12 49 c9 1d f7 3f 9b 44 
+0c 4c 0b 9d cb 88 13 a8 64 a7 74 8e 13 bc 1a 32 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d 6e e9 e8 bb 5d 10 29 d3 2d b9 41 
+86 c2 34 84 a4 2b 19 f3 d9 6e 29 92 54 f7 01 78 
+d0 41 bb 83 31 7f b7 61 4c d1 af be d4 9a fc 8f 
+fa 7b 1c d4 38 e1 02 f0 33 a9 46 25 26 e6 be 96 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=1284
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=477
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 dd ca 46 b0 40 5d a1 01 f6 fa 2c 0a 
+2a 86 57 a0 16 5e 89 24 bb db 2f 20 28 24 8a ae 
+9a f6 d5 d5 45 5e 5f 9c ff e8 0a 71 75 3f 5c 20 
+76 e5 84 f5 f4 06 85 a9 0e 54 a2 59 80 b0 bf 83 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=391
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=386
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 82 59 42 e3 5f a8 b9 be 51 11 07 71 
+d9 57 99 f1 ab 16 06 e6 8d 4d bf eb 49 cb 4a 38 
+fb c2 b0 a4 71 93 1d 80 ca 72 ff 01 3f d6 72 66 
+a9 f8 d1 f6 7a 9c b7 14 35 fa 78 68 27 69 6e f4 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=153
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=148
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 94 7c 3e 39 96 40 9b d8 a2 4d 94 64 
+5a b2 81 cd 96 ee 75 3a f1 aa 80 c2 64 10 7e 7b 
+be 0f 9f af b8 4c 73 2b bf 38 4b 60 e1 58 86 84 
+86 2f 6c 6a 7b 48 5b 1b 2a 7c 80 97 35 12 64 49 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=194
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=189
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 bd 47 75 5c d5 f0 50 89 81 65 3c 90 
+fc bd 46 04 02 83 74 f1 fd 0c 1a 36 2f 16 e7 96 
+e5 2b 73 65 5a 3f 1b e6 74 71 9a 1a 59 55 eb 55 
+87 4e 1a 17 9d b3 27 c7 01 25 63 dc a8 e8 4d 5c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=194
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=189
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 bd 47 75 5c d5 f0 50 89 81 65 3c 90 
+fc bd 46 04 02 83 74 f1 fd 0c 1a 36 2f 16 e7 96 
+e5 2b 73 65 5a 3f 1b e6 74 71 9a 1a 59 55 eb 55 
+87 4e 1a 17 9d b3 27 c7 01 25 63 dc a8 e8 4d 5c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=1284
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=477
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 dd a6 12 18 69 23 40 92 ec c1 9c cb 
+56 3a a4 b0 bd ac 7b 97 3e 3f 14 fa e3 6c 87 2a 
+ac 66 43 08 a4 ff 20 17 52 98 d8 6c 5c ff 16 9d 
+dc c7 76 f8 cd ff 08 db ec c7 ed 36 ed 48 12 c0 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=400
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=395
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 8b 09 d6 94 11 3b 5e a7 9e cd 46 8d 
+35 31 81 a2 ea 6c 94 83 3c 4f 4f a8 4f 51 a5 82 
+98 97 f6 fe bf 6b 4f 54 f4 2d 50 7d e2 cd b7 c7 
+8c 37 78 05 8d 6e 2d c1 7a 2c 0d c4 b4 39 12 8c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=307
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=302
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 2e fd a6 9e 5e 14 9c 0e 25 2a cb 19 
+7c ca da 66 d7 54 5c bd 81 87 47 02 b9 ea cb 55 
+1c e7 32 93 f1 06 8c 80 e1 6b 5e 22 50 cf 2b c5 
+55 72 c8 96 d4 25 f8 63 76 77 f9 f1 11 7a 1f 9c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=334
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=329
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 49 a8 77 4c f8 60 05 bf 61 b9 0e 02 
+b2 b6 18 2b e1 bd cf 3f e2 8c 5d 42 91 d5 3c 37 
+5f 31 07 f3 a6 77 9c 01 28 83 05 f7 06 71 15 c1 
+73 5b 5e ac 39 41 89 a4 d8 45 24 d8 b5 18 6c c1 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:1667, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 b5 41 66 81 90 78 e4 53 74 e7 96 
+87 7d 93 06 b9 13 90 9d 17 0d ed 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=176
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=171
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 ab 43 96 20 96 5c dc 3d a8 74 70 d2 
+0c 4c 67 a6 a7 b6 5a 98 8a 7a 2e 04 e2 b1 24 64 
+d4 7a 56 25 8e ab 41 40 be 50 0c 84 b9 f0 8f 33 
+6a 08 af d6 87 9c 9a 44 70 54 65 f9 b6 60 8a 31 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=114
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=109
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 6d e9 66 5b b4 fe be 91 d7 d0 aa 2f 
+cb 2a a2 ad 42 83 d9 af de 0d 3d 01 b0 70 b1 6e 
+ee 19 ce 35 8d 33 31 6c fe 28 a4 cf a2 d0 51 24 
+9f cd 6e 40 76 46 7a c4 6c 54 c5 ac f4 4a e1 a2 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=168
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=163
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a3 63 14 06 fd 43 3d a2 7d e4 9c 37 
+05 36 7e 65 77 7c 3e a6 a0 4f 75 77 36 db 37 3d 
+e8 68 5f 89 ec ea 0a a5 9f 9d 03 f1 43 86 09 a9 
+26 25 83 1f e2 9c 32 a2 6b 0e 18 37 cc bb cb f0 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=92
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=87
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 57 aa cb 31 c0 63 ce 98 92 5f fb 64 
+e1 c1 d9 f3 2c 95 ff 90 8d f9 ab eb 18 10 d6 f0 
+99 33 26 76 97 88 1a 09 d4 db 94 3f 28 df f1 99 
+4f e7 1d 9c 7f 21 16 c1 00 ba e5 40 cc 7d 4b a3 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:3203, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 34 fc 1f d5 ff 0e 5f 77 29 2f 09 
+36 9f 0e c5 02 16 d5 66 fb e0 00 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c e8 dc 8b 30 46 5a 57 4b d3 3b 19 
+1a 31 01 5d f8 ec d2 61 da c6 a0 3a b0 73 a3 06 
+65 5e 9e 5f 4e 78 e0 2f 68 fd 26 fa 9a 91 bc 91 
+92 1f ec a0 cc 71 8d 46 c6 b9 03 5f 2f c2 e2 81 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c cb 3f 4a 32 56 d9 02 31 e2 99 5e 
+bd 03 89 50 9a e8 4f 99 c2 f9 7a 25 2a 93 75 5d 
+b0 34 3c 3b b5 ae 92 53 78 21 1c b9 a5 40 e2 7b 
+19 80 89 d6 0e b8 ed 8d 38 f1 e1 d1 c3 0c 4e fc 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6342, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c bc cb 47 ca 7d 56 58 e6 8f 5f 54 
+1e b7 40 5e 57 5c 53 10 c0 29 8f b5 ae 57 63 e0 
+57 25 f1 8a 6f 50 ba 4c 38 f1 41 4c ca 0f 77 24 
+52 fd a6 e2 45 b2 15 fc e6 52 8c 04 d1 ab 0b f1 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:2758, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 87 ba a0 6c 54 83 09 a7 f9 26 bd 
+36 f5 d2 5c 63 52 81 47 03 e7 b1 da 3c 58 4b 8f 
+bb e9 cc a3 0a 40 fc 03 8d 86 bd 55 96 55 71 4b 
+27 df 55 ae 7e 58 04 c6 d8 02 b0 a9 b7 e5 6e 66 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=1391
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1386
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 05 6a 9c cf c9 39 e7 75 65 fe 5c 09 4b 
+eb 80 5c ad 0a 82 8d ec 09 fc 13 13 a9 b4 8f ae 
+12 85 fd 1a c7 d3 99 fc 9f 8a bc ae f3 48 ef 38 
+bd 32 24 7d 29 55 12 6d 48 bc df 94 2c 86 20 39 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=88
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=83
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 53 e7 c9 da 2d 60 6b 13 82 37 dd 1a 
+e8 b5 09 dd b1 2f 16 59 af 66 f7 a6 e4 09 0b dc 
+c2 ff 5d c3 37 b6 65 a8 36 12 73 41 81 f3 7b f3 
+e7 5e bf c1 1d 0e 67 c7 3f 35 e1 eb 2e 0e 30 c6 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=163
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=158
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 9e 3c 19 59 34 a9 98 0a c4 aa a3 a8 
+92 ac a0 2b 85 0e a9 5b 25 63 98 9c 22 be 10 10 
+89 56 df 93 b1 8c 17 e8 e3 e6 c1 6f 0c 2c a2 e5 
+75 a7 d8 d6 85 69 c3 43 26 28 64 2b 1c 29 b1 1f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d a0 1f c2 3c 18 a5 57 5c 0a ca 1d 
+c9 03 5c 81 cd 6c 2a d4 ff 6d bf 20 96 4c 12 e0 
+58 d4 3f 9d da ae 24 74 a6 c6 e9 8d 74 56 91 d3 
+93 89 a0 ef 5a 07 a0 c0 0d 13 d3 ee 1e f3 83 28 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=309
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=304
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 30 26 c7 bb e1 0a 8a e6 cf 93 77 c9 
+3f 89 24 3f e6 bc 8c 3b c7 76 a6 c6 56 72 c4 a9 
+12 a4 a3 93 6f 6c 4b 6a 4e 18 61 c9 1d f9 a6 86 
+ce e9 38 2d 19 12 16 9b a8 36 8a 1f e8 b0 5b bf 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:52361, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 4b 87 b8 c3 8c 9c fd 36 b6 49 89 
+2f 1c d9 a3 fa 4e 15 e5 81 13 96 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6342, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 0f a8 ad d3 df a2 d2 60 0b c0 ff 
+1e de a8 e6 f1 3e d9 4d a0 59 c9 3b 2a dd 35 d0 
+87 ff 4c e2 47 71 3f 6d 15 69 6b fa 6b 69 ea 9c 
+1d ad 17 36 2e a9 01 7b 51 5c b0 26 86 3d ff c9 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 6d 39 90 f0 2d 1e 64 38 d5 52 5a 
+5f d8 06 c6 60 ed 98 dc f0 86 94 33 6e f5 ef fc 
+df 75 1c 8b b9 fc c6 cd 90 fd 27 39 de 51 f7 3e 
+15 37 58 20 04 b0 bc 03 6d a5 7d d6 09 c6 3a 1b 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 1b 10 4f a0 8b fc dd 43 81 28 86 
+93 60 f4 9c b3 dd dd 5c 5a e2 a5 12 95 c5 be 2a 
+45 9b 97 03 1d 46 3c be 70 bf 8f 2f f4 1c 56 6a 
+32 c3 be 22 76 bb e4 44 32 cd a7 21 2f 5a 38 2b 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:2758, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c af f6 7d a7 35 f3 32 d6 2f f9 31 
+43 7a bd 4b 62 5c 4f 5e 1b 07 8b 5a da 8b eb bb 
+16 27 01 d6 b8 2c 71 db 8b 11 ac fe dc 01 58 e0 
+08 e6 73 fa 2e 90 cb 8a e5 36 03 27 8f 0e 9f f6 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 41 64 a9 c5 49 74 ba 89 7c 43 49 
+71 06 56 57 1a bf ef f2 e2 53 f6 93 38 aa 7c a9 
+f7 84 76 19 06 28 3a 5b e4 79 61 1f a8 f8 75 61 
+2a 67 8d 5f 6b e0 90 cb 22 63 9a 00 30 e2 6e 4d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 91 d5 be 15 18 d5 0f 7c 68 0f 6f 
+41 26 e5 a5 ff 89 75 cf 78 f8 d7 0c b8 ce 06 81 
+73 ca 10 69 04 75 9e db 7b c1 ea 48 fe ab b8 d2 
+3d ff 5b e1 60 2a ff cc 69 4f f0 34 36 80 f5 5e 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1171
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1166
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8e 45 e3 cf 04 3c 5c b1 9d 0b f7 aa 
+0e 10 00 82 25 5f a5 90 25 13 97 53 70 ed 18 f8 
+e1 6c 87 24 1e 2e ed f6 ea 85 e4 2d 7f c2 3e 7a 
+0e 94 68 5f 4c fb 0e c1 fe 56 cc b0 72 69 6b 0f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:54487, len=1448
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=67
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:54487, len=1274
+TLS Record: Type=Unknown, Version=Unknown, Length=50538
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:54487, len=258
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=202
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:54487, len=537
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=532
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 14 00 00 00 00 00 00 00 01 6d d8 1a 
+32 fc 39 1c 76 eb f2 70 ee ee a8 d2 88 da 00 3a 
+f9 2e 27 c3 c9 57 b0 62 4d 0f fb ae 00 89 04 c8 
+ae 63 f4 1c bc b5 02 56 46 12 b6 0b 3b 14 e5 a8 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:19641, len=47
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=42
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 2a 00 00 00 00 00 00 00 13 6c 7e c0 
+97 9d 7e c3 e1 b0 53 1d d9 56 bb 78 38 81 0c e0 
+62 d9 a2 5f b1 e2 0c d1 fc 8a 61 48 1a fb a1 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d 9c 7f db bb 98 37 9d 68 d7 3e 9e 
+e9 fb 02 ee cd c5 0d f4 16 87 d2 a2 ba 35 2c b3 
+da ef 7e 16 45 48 74 61 50 eb 5a 34 0f 6d 91 6a 
+46 7e 60 84 ac b4 91 97 e6 26 b0 e7 9a 57 dd 8b 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c fc 57 82 be 89 c8 64 ec 92 27 ef 
+a3 ff 16 5d e9 90 06 d3 d8 ad 5b 15 1d 22 9d 79 
+ec 3d b0 7c 83 d0 8b 7c 30 ba a4 cb 30 c6 a7 aa 
+fd 12 27 25 13 85 2e 4b 97 66 81 d7 ea 6c bf 5f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d 1f 11 75 cd ed 9b 2b c7 24 43 57 
+45 81 de b9 dc 39 97 0f ef 47 57 0e eb e5 96 33 
+78 32 7c 58 52 33 6a 37 c1 dd 9d 2b 79 53 63 ba 
+0c 4f 5e db b6 00 61 3e c6 4c ef 70 4c 4b 78 18 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=1448
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=104
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=1448
+TLS Record: Type=Unknown, Version=Unknown, Length=43779
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=1360
+TLS Record: Type=Unknown, Version=Unknown, Length=21349
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=51
+TLS Record: Type=Change Cipher Spec, Version=TLS 1.2, Length=1
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=69
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=64
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 40 00 00 00 00 00 00 00 01 45 44 08 
+25 53 fb 19 6b fc 74 19 3a a5 bb d1 7f fe c4 98 
+c5 6e c6 8d 27 d9 3c 1b b8 2d 63 72 79 05 57 9a 
+e4 86 a7 aa 4c 52 13 c8 15 c7 35 3e 3f de 2b 39 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=38
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=33
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 21 00 00 00 00 00 00 00 02 ad 3a bb 
+21 de 0f 7b 5d e0 59 99 ee 96 e3 29 4e fa 07 c3 
+06 88 0c 68 37 a9 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d e9 d6 c2 39 1d b5 55 ee 97 68 c7 
+88 f7 54 03 3f ee 1c 38 43 d5 76 89 53 5f d0 a7 
+e1 d8 a3 61 2d cb 00 f6 b1 7e d5 82 26 55 cd 52 
+f3 f1 54 f7 d3 66 2f 4d bf a1 fa 08 e4 56 44 b1 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43683, len=1448
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=122
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43683, len=1448
+TLS Record: Type=Unknown, Version=Unknown, Length=9035
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43683, len=534
+TLS Record: Type=Unknown, Version=Unknown, Length=33649
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=1448
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=122
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=1448
+TLS Record: Type=Unknown, Version=Unknown, Length=12534
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=670
+TLS Record: Type=Unknown, Version=Unknown, Length=56450
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:22676, len=32
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=27
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 1b e2 02 7c 95 58 f7 1f 01 6e 0e fb 
+4f 75 2c 92 42 50 f4 6e 31 4b a5 ab b5 4b d1 5f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=415
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=410
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 9a 00 00 00 00 00 00 00 03 f0 bf c6 
+1a 4d 5a 18 b7 4c f6 02 ad 1e 43 a3 cc e8 f9 16 
+ed 1f bb 68 df 0d a0 93 f6 c7 96 ec ff 5d 8a 68 
+04 12 9b 30 a8 74 73 79 df b0 63 e8 e1 fa 35 1d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43751, len=38
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=33
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 21 00 00 00 00 00 00 00 04 e9 ce 30 
+e5 77 71 5a 8b 1c 02 c0 b9 c9 8b 40 74 ea ce 61 
+d8 a2 81 f2 4d 6c 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43683, len=950
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=945
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 03 b1 cf 3c d1 65 6b d8 9f 29 ae 2e 0f 
+39 da 6a a0 18 56 04 7a e4 ef 9a 73 7c 59 46 7f 
+7d 43 87 b6 8b a1 cb 46 f9 39 79 31 25 f0 52 c2 
+d3 05 e9 fa a4 d2 92 20 41 f3 bd d0 11 ff b3 d8 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 98 a5 d5 44 e7 06 9b 67 af 5f 08 
+2a 71 60 18 46 de 22 63 f6 66 b1 27 ea 32 68 48 
+f5 8b 7f eb d0 2e fd 6b eb 5b 35 0e 33 f4 97 29 
+66 91 de a4 39 d5 91 b4 49 36 c9 3d f6 70 13 0e 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:43683, len=24
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=19
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 13 a7 c3 6f 68 39 ee 62 7c a9 46 f9 
+5b 8a 01 2d 4b 75 52 d6 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=303
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=298
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 2a 66 df 7c db c1 6c 23 be 49 16 18 
+b8 49 cd 01 5c d4 3a 58 36 97 da 96 e6 15 26 50 
+5f e4 6e bb ba b3 92 a6 b7 23 6a d7 26 3c 8d 05 
+57 b4 26 6d 2e 9b 70 5d bf 06 6b cd 1f 1c ed fc 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=303
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=298
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 2a b8 37 fa af 12 95 69 91 12 08 dd 
+12 3d f3 c6 8c f3 59 ca 59 7a 87 e2 4b b5 a5 0a 
+f8 35 31 5a e0 83 1a c8 fc 88 82 14 95 71 9e ad 
+a1 45 2b 4b 13 4a 1e 27 25 75 8b 34 c8 13 fe ce 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=62
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=57
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 39 5c 9f 5c 25 e0 09 c1 dc a6 77 a2 
+03 c6 70 e2 15 c8 e0 a6 fd 91 29 e8 86 78 10 65 
+18 ee dc 14 c2 bc 59 bf 09 8d ed 9b dc a3 d5 01 
+a4 9b c0 38 2e 76 ca 0e 59 52 9f ff 52 2f 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=44
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=39
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 27 d5 13 ff 64 19 82 b4 1e 04 d1 50 
+dd bb d9 d5 c7 9a c9 5d d7 6d 0f 5b e2 93 b1 d3 
+28 eb 12 e8 30 c0 02 17 22 bd 53 28 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:10883, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 56 8e a7 4e 36 08 1e c0 dc 2c 40 
+52 b9 8a 37 50 3c 91 a9 a8 f0 34 ed e2 a3 4e da 
+12 9a 74 7d 81 19 58 70 76 bf 54 90 79 db a2 2a 
+b1 2c 83 75 b9 0b a2 48 6c 80 90 a1 2b 3f 7a 4e 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:39105, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:40641, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:46785, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:44737, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:49857, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50881, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:40137, len=80
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=75
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 4b 00 00 00 00 00 00 00 17 b2 8c e8 
+2f ff 8e ee 0f 94 15 af e1 f8 a4 6c 29 74 91 92 
+36 9d 3f cd dc 7f 2d 94 a6 a8 90 56 79 57 52 6e 
+cd 39 b2 82 7b e5 c0 73 5f 1a cf b9 48 96 bc 1a 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:39105, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 bb 81 0c 3d 1d ad 61 5d 86 e5 3d 
+9b b0 1d 8f 1c 53 7a a6 a2 44 e3 36 92 bb df 50 
+3d 46 26 79 82 4a 58 15 15 65 2c 4c 4e bd d8 19 
+70 46 ff 80 19 0a d9 c1 73 d3 46 c6 fb 68 b5 a1 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:40641, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 86 b5 88 68 e5 a6 a0 6e b3 da 87 
+33 81 89 75 80 9f 44 a8 e9 b9 03 6e 26 b0 2c 62 
+d4 da b6 7a 9c 71 29 97 c5 24 53 ee 5a 72 ef d9 
+43 6d 8c 90 b2 40 a1 03 87 66 2c c9 1f 22 53 64 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:46785, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 cd f9 ea 9a 2d 41 4e de 8b f2 5e 
+40 1f a0 b0 bd 02 e7 a8 76 49 2e 85 ad 96 41 d3 
+5a 62 03 99 7b 74 fc b2 5b f6 e2 e1 ca 10 69 30 
+88 53 4a 8c c1 9e a4 70 c6 59 e7 db d0 55 95 94 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:53441, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=819
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=814
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 03 2e 23 70 ba dd b8 4a 3e 5f 43 f7 3c 
+cc 2b b0 43 08 52 1f 84 dd ba 48 5d 1d b2 7b 9d 
+99 86 c0 cd f5 44 91 10 01 04 0f 8a c6 02 26 3f 
+8c 70 09 f0 09 bc 08 fc d7 a5 ff d2 7c 35 3c 58 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:11958, len=32
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=27
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 1b cf d4 a5 43 93 b7 62 aa 4c 36 ee 
+c6 40 df a3 d7 0d 3e 46 bd 8e d6 e2 56 40 81 d5 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:57025, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:44737, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 4a db 46 38 7c 1d 64 8b 0b 00 2f 
+6a 03 ac 80 25 f9 ff 7a ad 7f c3 54 8e c4 01 ed 
+e7 8c 00 9b 22 f5 8c a4 04 dc 81 8a 61 28 44 3d 
+f7 91 97 26 82 59 7d 20 d7 22 bf b9 91 48 36 de 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:57537, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:59073, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:61121, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:64193, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:50881, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 fc 9e 0a 1d 1c 79 1f a7 c4 ff 20 
+c8 99 c6 b0 d1 70 2a 75 a2 1e 01 6b 47 83 20 2f 
+55 84 f6 4d 31 44 0d e0 7a 32 98 7a be 4f ec 00 
+03 37 56 4a c0 cd 6a 8a 75 d4 62 86 3e 54 e6 23 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:49857, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 0d a4 e7 f5 f5 73 c0 89 9e a6 0a 
+28 19 1c 1e 54 ce 3e b1 46 81 20 2a 9e 7d b8 16 
+4f 9f 76 6d 0c 30 85 30 dd 5e cc 5f fc 38 21 20 
+ba e6 7d b2 8f df 31 58 96 0c ae 3e f6 cb b4 a6 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:10883, len=951
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=477
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 dd 3b 65 c2 0d 3b 42 f0 67 3f 8e 50 
+9f 21 b2 5a fd 6f bd ee e6 8c 02 03 db 6b 5f 34 
+a2 43 26 6c 5d 09 50 b0 d1 f0 2c 19 14 5b 7f 62 
+a9 05 9c df ee 9d cb 82 8b 27 d9 be 95 a0 0a b9 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:64193, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 34 e0 06 e1 30 3d 91 c9 56 de 1e 
+db 93 2f a9 8f a6 36 a1 14 b2 0e 87 a2 ac e4 ae 
+cf e7 29 d0 8a 50 aa d5 1d d1 08 07 f5 33 8a d1 
+7e 75 1a 52 f9 66 e9 ac 70 a7 e5 3f d2 94 09 7f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:53441, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 78 50 e8 c9 4e c3 fd ec 52 96 e6 
+a6 b5 59 c6 11 31 03 18 52 b1 bc 3f 4e 2b e9 7a 
+33 01 4e b9 24 a9 8a d5 9d 6c fd 07 66 c7 ab ee 
+c7 34 ce 9b 20 8c 98 a4 ca 80 b1 e4 2f 76 ec 88 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:57025, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 dc 24 c6 47 1b da f3 5f 6c 32 4e 
+dc 7d a8 19 45 e9 60 27 a5 5a fc 42 20 c1 60 61 
+f9 1a f4 c7 2d 27 36 85 97 5a cf d6 ff 10 31 9d 
+c7 9f bf 5b 5b 4d f7 c8 00 d7 19 af b2 11 98 07 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:57537, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 08 76 64 2c 37 97 c3 aa bf 6c f0 
+ff 3b 40 80 37 20 e8 07 57 00 8d cd 50 fd fa f8 
+b7 eb 73 ac cb 50 49 6e 64 a3 c6 14 56 76 28 11 
+34 af 5d 93 6e f5 0e de ab 91 51 e6 70 c1 b2 e4 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:59073, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 90 81 05 44 6b 10 17 42 49 fb 2c 
+91 f7 06 7c 19 03 af fd 7c 23 e9 1c 05 6c 46 b5 
+0b de 0f 68 66 60 0e 63 ac d0 21 5b a4 46 d7 17 
+e4 73 28 2c 17 16 27 8b 40 83 05 19 da f0 87 a5 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:61121, len=1243
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=597
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 55 47 45 9d 38 07 71 b2 e1 77 ab e0 
+d5 e7 d9 25 79 8e 03 0e 9d bd 97 d8 f1 28 a7 d7 
+63 4c 95 af fc 6a 87 5d 7b d0 8a 11 88 69 70 63 
+a8 59 50 04 d9 1a c9 aa fc fa c9 df 76 a6 db 0d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 94 8e 5e 01 09 64 19 cd aa a7 e8 
+2a 7d 49 0e 4d ea 03 06 16 e0 e9 99 c0 ba 7e a7 
+d8 15 0c e1 e4 76 17 01 d7 f5 63 57 ef c5 b1 81 
+c5 af f7 fb 9d 65 64 86 81 b8 c0 33 b3 46 d4 31 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 1d 93 0b 84 0a af fc 75 a7 d3 96 
+a4 99 4c 59 84 eb 54 1f 7b f5 b9 bc f4 f9 c1 ec 
+a3 82 ee 33 9d e4 32 ba 95 8a d0 b4 d5 4c fd 82 
+7f ad 0e 03 8c 87 b0 41 91 53 e7 ae aa 32 2f 51 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:39105, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 4a 9c 3e 9b 45 bf f7 11 7a de a6 
+cf f7 59 c8 ef c9 04 8e 88 ff 71 57 e6 a5 32 b8 
+1e ae 34 1c eb bc b5 eb fd b3 f8 d0 f7 c1 b9 5f 
+3e 36 15 5c d1 21 60 d3 cc 37 c6 2f e8 ce c3 0a 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:40641, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 0a d9 f0 ad 45 13 c5 29 c6 06 a1 
+70 26 1b d3 cb 05 03 59 d1 37 d7 39 b9 79 17 69 
+0c 71 2f 29 57 de 06 33 50 48 27 25 26 fb 68 58 
+47 b4 b7 91 0f a8 32 e0 90 c8 a6 e8 e4 e9 3b 3f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:46785, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 95 2c 85 62 54 d8 bd 9e 8f c8 cc 
+3d 5a 71 dc f8 5c b1 86 49 70 35 fe 14 ac cb 74 
+5b 19 24 d6 c7 32 9b dd c6 66 5e c0 1c 24 cb aa 
+58 43 ae 00 a3 52 d3 8f 4e 08 93 12 64 92 e4 19 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d d6 75 fa c1 9a 92 e1 87 d0 bc a4 
+4f 84 34 cb c0 84 cc 5a 0b c3 6f 9f 25 a6 1c bc 
+1d bd cf d0 41 cf d8 c8 c1 c2 e9 92 25 e7 a4 ff 
+5e 61 5c de bf 03 26 35 7f dc 5c d2 a2 03 fa a9 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=1448
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=477
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 dd 47 ac 57 8c d2 fb 1a 5b 7c 18 24 
+22 a8 c0 8b 37 f5 c3 fc 0f a1 0a 01 89 85 de 49 
+aa 4c cf 76 3c 50 e9 04 57 c6 f7 6f 35 49 23 65 
+27 77 b3 ec 3a 00 ab 52 68 42 0f d8 2e 3d 8f 0c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=208
+TLS Record: Type=Unknown, Version=Unknown, Length=49238
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=321
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=316
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 3c 26 71 50 7b 29 0e 7c 35 13 12 e6 
+49 4e ba fa b1 e3 67 7a 4d 82 75 aa f3 68 bd 61 
+0e 4d e9 6c f3 fb fb 6f cd b1 53 be 00 cb 3e 36 
+f4 fe 1a fb b5 d9 0f ed 83 fe 82 69 08 0f 0a 02 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=167
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=162
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a2 d4 30 11 52 b5 b3 16 e7 2b 01 98 
+60 05 7c 4f 21 6f e6 b0 27 b2 0d fa f4 52 bb 1d 
+f8 c6 74 65 f3 94 c4 f2 16 0f 7a 57 36 9d 3c 27 
+94 fe a4 df 18 62 f8 c6 9f bd 4a 73 e7 a7 ad c4 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=172
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=167
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a7 37 e2 08 dd 19 07 98 21 7b fc 2b 
+73 f2 25 45 af 5c ef 4f 21 e9 21 f7 0e 24 04 a7 
+3a eb e2 7e e4 f4 f6 07 17 00 6b 6a 88 32 fa 3d 
+82 c4 8b 71 78 02 81 08 51 51 84 91 e8 66 d7 8f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=160
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=155
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 9b 86 58 a1 0e ee 5c 95 4c d3 28 90 
+17 71 a5 d0 5c 9a ca a7 9e 28 19 32 b2 5b 0e ca 
+f8 31 7b a8 ca 53 aa 94 6b 6c 29 15 74 2d 37 8e 
+bc 16 18 82 33 cb 48 5f 61 0e 54 63 7d 46 1e bb 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=159
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=154
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 9a 1e 20 63 26 c2 3d bb 96 ed 9d 0c 
+4c e3 80 27 5f 16 67 79 ec 97 7b 3e 6c 44 1e 46 
+91 2d cd 92 f4 ac 96 75 d3 0d 02 14 65 55 a9 00 
+a8 84 4b d2 06 15 97 3c b4 1c 5f d1 e1 c3 35 df 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=152
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=147
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 93 2e c5 53 22 c7 ad d2 df 13 b7 03 
+41 23 d0 fd 10 a1 22 e5 a2 d3 32 63 ac 5d c3 f3 
+4d f7 78 d3 13 af 82 81 9f fe b5 45 40 0f 4f 66 
+1f 56 4e 35 47 95 39 3e 02 1f 57 98 0e d3 2a 3e 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=167
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=162
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a2 f2 45 d0 b7 f3 63 0f 9b 74 d8 5f 
+61 78 12 7d aa 1f f2 a5 d6 08 95 d9 76 42 45 61 
+59 03 d8 2c 0a 52 62 51 bb 2b ce 6b df af 7d e9 
+b1 06 7e 4e 46 5d e8 a4 99 39 36 d4 6f ec 2b 92 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=161
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=156
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 9c 51 20 b4 e6 50 71 25 0d 9e 63 3c 
+c9 24 7c 8e fd 4c 9e 3c 28 27 a2 0c e4 30 17 3e 
+c8 ef fe a6 94 44 04 aa a0 39 1c 62 a5 28 c0 4c 
+7a 47 ff 07 4c fd dd cb f5 e4 6c 64 5d 41 8e ed 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=107
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=102
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 66 5d 86 c2 de 73 70 26 5e b7 ad 18 
+c2 90 b6 4d e2 e4 15 01 8f 59 ac 23 84 3d 33 66 
+7d ad 61 37 3d b1 e3 35 c9 c0 c4 b1 33 61 cf 69 
+2a 8f d8 55 4c 8f 67 3d f3 aa 04 b7 a1 45 03 c7 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=166
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=161
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a1 5f f7 a2 4c ab ac 42 9c ee 92 1a 
+78 99 83 74 e5 ac 54 4b 1d de fb 87 a9 61 d6 fd 
+24 39 f6 3e d9 79 48 90 3b 02 c5 93 e1 8c 32 25 
+03 fa 25 43 31 f0 ba fe 78 d9 02 e7 04 19 85 f7 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=85
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=80
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 50 59 7e c0 4f bd 6d ee e6 6b 8f 55 
+99 44 87 16 5e 64 65 4f a5 1f 25 9c 3c fd 54 ba 
+c5 14 16 e4 0f 3e f6 dc 5f db 36 e2 c3 c5 d3 36 
+0b 47 0a 6d 00 77 27 1a 4e 03 12 24 89 66 c8 ca 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 b8 ec 5c cd 9d 7d da 59 66 4f c6 
+0b 01 17 2c 9e 2a 28 27 83 25 21 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 18 7c 31 54 bd 06 67 54 91 e1 96 
+e9 8e e7 f7 60 91 01 4e 24 69 de 52 6a 63 84 b6 
+37 39 e2 d8 63 82 76 67 f0 ff 1c 02 75 ca 84 1f 
+ac df a7 5b 4e f9 86 4a 0d dc b8 fb f6 3d bc 10 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 46 a3 01 35 04 06 51 bc e1 0a 9a 
+85 b8 23 9a d5 db 21 dd 87 c7 93 2e 51 50 e5 cc 
+7a 42 a8 ff 26 ee 1d 5f 76 78 0e d7 29 c3 c6 5d 
+32 49 08 75 6b 62 12 81 51 94 5e 07 f3 26 3e ec 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1170
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1165
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8d c9 74 27 20 76 63 68 3e d7 8a e7 
+3f e8 d0 6e c2 58 66 b3 64 8a 6c 3c ec dc b6 8f 
+37 12 b7 fd b7 d6 72 f7 ed 11 e6 12 10 4f 9b a1 
+f0 57 fb c8 59 c9 e0 85 aa 57 72 e7 5f 54 63 f8 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=1284
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=477
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 dd f4 05 9e 02 f9 ce 8b d1 f7 80 5f 
+54 28 74 bd 2e b5 c3 63 bf 16 6b 13 70 10 89 54 
+9f d4 d8 9c 88 57 2e 3a 1a df f0 54 b5 c3 84 82 
+f0 47 39 aa 41 1e 89 35 5d fa 25 fa 1a eb 61 35 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=407
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=402
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 92 49 49 1b b0 f4 45 86 4c 42 b2 71 
+cb 7e fe 45 81 c9 e9 f3 32 4e eb 99 87 c2 db 27 
+1f c7 f9 bc 3e bd a3 fe e8 6d 42 82 07 bb 67 e4 
+59 cd bc e8 ee 32 ca 7d 83 c5 cb d8 38 17 51 03 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=209
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=204
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 cc d5 71 43 46 d1 ff 52 c3 72 50 86 
+68 34 47 6c b2 f5 cb e2 01 53 75 6f 78 56 25 7f 
+08 a9 01 5a 88 e2 f0 1b e7 cf 21 ed d0 78 c4 bb 
+55 b2 28 86 85 8a 7a a2 c6 0c b9 55 87 e7 34 8f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=64
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=59
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 3b 87 0b 09 27 c8 dd 6f c3 6b 3a b0 
+4e 32 98 fd 52 2b 82 3d 93 4d ca 3f 94 55 ed f2 
+0d f1 dc 12 0d aa c0 67 3e 27 d7 20 0c 69 c5 9d 
+c6 31 6e 72 03 33 c3 97 9b 1c e7 9c 25 04 07 16 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=169
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=164
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a4 f2 70 d3 37 0e c1 ce ab cd 5c 65 
+c5 b3 3f 85 0b d1 a8 c7 ee 0e 72 fd 3e 12 de 0a 
+be 08 38 8b 20 95 e3 3e 96 83 17 8b 30 bb bd 02 
+12 29 76 eb 6b 51 6d 06 a1 81 8c 7e 82 89 9a 73 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1169
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1164
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8c 36 e6 2b 1c 55 88 0d e9 e6 96 29 
+b0 d8 2c b7 b3 09 38 69 64 4e 34 64 ba 03 8f cb 
+d2 93 85 b7 02 c0 5c f3 0b 29 3a 23 79 af 81 cf 
+09 b9 09 7d 60 cd b0 0d af 9a 33 dc 5d 56 4f ec 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=220
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=215
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 d7 b9 3a 22 82 81 15 8d b1 b4 87 92 
+1c 13 9b bc b3 55 ec 0b db 09 d1 f8 1a 44 db c2 
+3b fc fb 1a e6 6b e5 22 1e 84 81 51 96 90 b7 4d 
+e0 69 94 f7 d2 9d 99 29 dd 4f 61 d0 46 28 ec e9 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12990, len=41
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=36
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 24 56 91 57 33 f6 cb f1 36 da 7a 6f 
+f7 ce 1e 31 96 b3 fa a9 8f 83 e3 33 8b db f6 73 
+e4 98 5d 8c 82 55 a9 aa af 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=213
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=208
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 d0 bc 25 b2 bd 9d ae bd 8f 9d 8a d0 
+ef 72 59 4f c1 80 ee 11 27 52 6b 18 55 b6 d7 06 
+5c 20 d0 bd 1e 00 18 be bc b1 21 27 06 de 87 67 
+78 fb 1e 7c 1f c3 29 52 d7 86 33 fc 94 21 83 4c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=162
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=157
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 9d b0 06 e8 87 94 2e 43 38 16 41 ef 
+fe 9d 9c 73 a8 a2 e5 a4 7c 87 45 8a 37 ca 6c 0c 
+1c e1 e2 11 0b 38 b8 c7 22 9d a5 a7 2a e1 73 85 
+84 be ea 3f 03 f1 62 aa 93 f0 1b 43 19 6e 93 82 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=111
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=106
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 6a ac 6b f0 36 66 0c 5e 6a 1b 57 19 
+0e c9 33 e1 ff cd be 50 7e 8a b1 c3 80 c8 89 82 
+a4 8c e3 26 74 03 f7 aa 83 04 3e b9 17 eb af b5 
+fa 6a a1 da 12 3e b3 15 6e 57 8d 41 9e 52 7d 69 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=179
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=174
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 ae 03 8b 4a d5 52 77 c5 05 eb fe 83 
+84 00 9b db d9 0b 47 8c 16 49 1c 0f c5 99 e2 e3 
+0c f4 fa 7f 3b d0 42 df 3b 0a 69 ec 1b 94 e1 25 
+20 3d 60 38 d7 f6 ea d3 99 83 26 2e be 0c b0 43 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=89
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=84
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 54 ba fd e6 dd 81 fc 58 a5 6c 2f 66 
+14 da de b5 84 ec ba 8e a6 a2 ea b4 f4 c3 3e a8 
+f0 2d 32 61 60 92 ab 25 3a f0 65 eb 6d b5 39 a3 
+57 01 f4 77 0d 01 f6 87 05 bd 94 74 6c 15 44 83 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:12931, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 93 a9 3d bf 01 bd 7a 63 fe 1b 2b 
+3a 0e 73 87 ce 4d 6d 79 0e 6c 7a 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=234
+TLS Record: Type=Handshake, Version=TLS 1.2, Length=128
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c e1 ad 41 ff e1 0d db c6 08 52 0d 
+1f fe df 93 ef c5 e8 b3 6f a6 c0 26 b5 ab 9c 16 
+f0 d1 72 d6 38 34 35 30 bc 06 9a 68 7b 97 e1 73 
+e6 2e 68 4a 34 e3 18 b8 7a 38 cd d1 01 03 e9 49 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:40641, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 99 62 52 b9 2f fd bc d7 45 bb b5 
+67 f6 8d fa 5e 35 79 9e 33 bc 2f 7c ff 17 b6 39 
+05 7c 37 59 c0 a6 f3 0b 33 35 28 10 86 08 0b ff 
+53 33 7f f8 24 dd 7f a5 26 6e 62 c7 9f 07 18 42 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:39105, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c 4b 08 bd 0e 75 38 08 6d c7 75 73 
+52 3a e5 cf 79 b1 ee 94 66 85 cc a2 81 95 df b8 
+10 3d ab d6 8e fe 84 3b e1 83 60 22 21 e3 4e b1 
+69 ef b4 d9 cf 63 c6 67 a6 29 3c d9 cf c4 21 55 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:21181, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c cd 7a 45 f7 8b 08 86 1f dd 4c 35 
+05 64 80 ea 9e 9a c6 ca 71 91 5c be a8 96 b3 c1 
+42 18 e2 1c 92 0a a0 a1 64 5f 8f 46 d3 54 88 ad 
+15 49 ce 25 c9 d1 ec 09 c6 fc aa 85 4d b9 c4 3c 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:42626, len=1169
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1164
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 04 8c 52 ff 3e db ca 64 ae af 72 63 bb 
+f5 08 98 c6 14 44 32 6f 27 a3 7e f5 e2 06 0f ab 
+bf 3e c7 1c e3 34 a4 80 4f 4b c3 1e f6 ef 71 bb 
+27 34 30 7b bc 8e 0c fa 8b 1f 3d a6 72 4b 08 8f 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=1284
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=477
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 dd db 31 4b 6f 2d c1 55 e2 26 f3 73 
+40 21 9d 81 44 ff 56 86 fc c8 83 ba 8a 0a 82 8f 
+f1 53 54 84 40 4b 78 44 6c c4 09 7b 87 23 65 f6 
+cb 45 d0 9c 62 bd 1b 6f 94 3b 7f a8 91 dd 40 5b 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=393
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=388
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 84 1d 27 f7 92 f7 82 c7 2a 93 9e 21 
+68 ed 38 38 8b c7 31 b9 12 ac a8 03 ea 52 4f 4b 
+d7 27 08 fa 0f c5 27 97 d8 60 68 14 00 a1 0d 9d 
+67 95 f7 79 c3 3d 27 30 91 3f 78 d2 6f 6f b2 a5 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=314
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=309
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 01 35 78 24 e0 ec 3c 60 09 5a 56 e4 60 
+61 66 11 e8 d8 1d 2d 5c 82 76 87 c6 f7 ef a2 a9 
+24 1a e1 f3 e4 26 a4 92 4a 09 17 be cf c2 ea 02 
+bb f0 60 d5 05 f1 8b c5 8b 82 89 75 e6 5a 68 80 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=1391
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1386
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 05 6a 35 38 c0 11 5e e2 3d 7b 1c 49 88 
+cf 3c eb 46 e0 29 4a 8a 79 0d 45 13 c7 54 db 68 
+af db 1f a9 b6 29 bd 8c 60 58 d6 b7 42 8a 21 2a 
+3f ce d6 3f 7d db 39 fa 92 ab 0e 84 e9 9d c3 6d 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=97
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=92
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 5c 08 d1 56 ac d2 00 f7 51 fd f4 28 
+62 d9 79 56 b7 83 f6 04 d7 c0 f1 98 e0 cc 36 4d 
+a5 d4 1b da bb a1 93 1c 26 90 db 1c 02 63 55 67 
+fa 38 42 a2 f0 31 c9 7a 1c 36 a5 9f 58 8f a4 00 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=103
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=98
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 62 74 66 b7 8f 21 82 01 85 7f 5a 85 
+e9 d4 49 6e 96 c1 e8 7b f3 6e f7 98 80 78 02 04 
+fb a8 d3 79 69 d6 9d 0c de 4b ab be 8d d5 bb 25 
+8e c4 f1 4a cf b1 d8 cc 4d 69 d6 c8 91 9c c7 06 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=177
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=172
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 ac e2 6f 7b a3 ca 29 90 ec 6c fb d6 
+2c 1f f4 be 64 b5 65 8f 88 c2 16 1b 9d 39 94 77 
+3d 9b 8c 2b c4 58 c8 c7 51 79 12 78 ab 73 6b 98 
+40 c3 58 d4 ab 64 65 a0 3b 22 ff 70 8c f7 92 d0 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=82
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=77
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 4d ae 3f 81 31 6d 6c 55 dd c1 e3 55 
+60 8b 2a eb 8d e4 93 de 53 67 86 73 87 50 7b 4f 
+95 51 fb 19 3b e1 5f 9d 9d 64 9f 7e dc cc 6e ac 
+e6 4e e3 fb ec 2d 67 35 2c f3 31 70 69 b4 a6 89 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:36547, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 5d a0 70 8b 6c 6f ea 78 a2 2f ec 
+83 34 32 00 e7 fa c9 69 cc e0 38 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:10883, len=1391
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=1386
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 05 6a f4 9a fc 15 97 fe e0 79 86 70 83 
+57 b1 82 2e 69 3b 72 5e 8b 32 2b 0b 4c 94 e1 9e 
+8b 71 54 b2 f8 ae da 77 fc 57 af ad c3 41 4c 3d 
+6d 5d d8 b5 43 04 c7 fb bc 42 df f0 36 4b 75 c2 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:10883, len=84
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=79
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 4f ff e9 ba b0 7a 78 87 55 46 ce c6 
+08 73 e0 5f e7 49 0a 78 8a 18 18 6f db 89 62 27 
+7f 1e 6d c4 fa b5 3e c5 3c 20 fd 63 a2 6c 8a 5a 
+c0 61 3d 97 d0 cb de 0e 6c 88 e6 51 4c c7 69 e8 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=108
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=103
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 67 6d 4d 7e ad 8a 97 07 1f ac 56 26 
+6e 7c 36 8e d1 4b 45 39 2c f1 b0 61 1b 5f ba db 
+0a d5 aa 78 9f 24 e0 7f 20 74 0e 17 e7 88 71 01 
+b4 22 43 2d 5b bf a0 5b 4e 56 93 51 90 ef 6b f8 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=168
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=163
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 a3 63 b9 99 56 3d f8 fd 9b 70 f1 81 
+50 46 b3 9c 3c 14 4c db 8c a9 74 99 e9 dc 75 d5 
+9e 44 4d 15 a7 31 e4 25 e8 97 d3 2c 2d c4 f7 9d 
+79 cd 66 e8 a7 b6 2b 29 98 db c8 10 ec 1e a7 f1 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=87
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=82
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 52 8c 6b 29 65 37 08 ec ee 54 d4 44 
+3d de 00 62 84 14 91 44 83 01 58 71 74 6d 7a 2a 
+15 aa 2a 85 24 58 d8 e8 57 73 8a b8 ac 77 97 93 
+09 cd 24 00 4f b8 db d5 4f d6 c0 99 fe 82 34 2b 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:6787, len=27
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=22
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 16 6c 63 6a 0a a6 3e 81 ea 59 01 81 
+29 9e b0 46 46 2d 65 7e 9e b3 60 
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:18109, len=641
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=636
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 02 7c e6 b5 6c 6e 1c aa 59 84 da ac fb 
+94 09 8f 24 d1 e5 e6 24 cd ff 3d dc 4f a1 c2 9c 
+b8 f7 3b b3 e4 77 53 04 1b 22 8a 16 56 8d 11 6a 
+0a 94 6c 7f 76 c7 9d 96 99 f0 2c 17 d0 47 a7 fa 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:10883, len=250
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=245
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 f5 86 c2 01 66 a3 dc 10 a1 1d 5e 6e 
+96 33 87 28 2e 12 8d ea 8d 5f 8e 7d ce 40 26 bb 
+ee 11 0f 06 44 be 70 e4 27 2c f1 b6 ae 97 ad f8 
+d2 17 68 10 96 df 4e ac 53 30 0c 91 08 13 59 d4 
+
+----------------------------------------
+Userspace: Received packet from ring buffer - len=1536
+Captured TLS packet: 45.141.139.148:47873 -> 45.141.139.148:10883, len=81
+TLS Record: Type=Application Data, Version=TLS 1.2, Length=76
+🔍 TLS Application Data detected (potential HTTP content)
+No SSL keys found for this flow
+Raw TLS data (first 64 bytes):
+17 03 03 00 4c 1f 73 fe be 6d f6 8f 32 6b 39 a0 
+6d 42 7c 14 b7 e5 8e 12 49 ba 92 2a d1 af f6 e7 
+b5 0c e1 a2 2d cf ac 56 18 c0 d1 2f bb 3b 6c 14 
+f5 d4 d8 1c b0 61 b7 aa b0 f4 8a 5a 4c cc 2c 31 
+
+----------------------------------------
+
+Shutting down TLS capture tool...
+SSL hooks cleaned up

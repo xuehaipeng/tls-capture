@@ -53,4 +53,8 @@ int derive_tls13_keys(const struct ssl_key_info *key_info, __u8 *enc_key, __u8 *
 int decrypt_aes_gcm(const __u8 *ciphertext, size_t ciphertext_len,
                     const __u8 *key, const __u8 *iv, __u8 *plaintext);
 
+// SSLKEYLOGFILE functions
+int setup_sslkeylog_monitoring(void);
+int read_sslkeylog_file(void);
+
 #endif // TLS_CAPTURE_H

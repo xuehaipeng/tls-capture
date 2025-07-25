@@ -10,6 +10,7 @@ int bpf_prog_fd = -1;
 int flow_map_fd = -1;
 int key_map_fd = -1;
 int packet_ringbuf_fd = -1;
+int port_filter_fd = -1;
 struct bpf_object *obj = NULL;
 struct ring_buffer *rb = NULL;
 
@@ -66,11 +67,13 @@ int load_bpf_program(const char *filename) {
     struct bpf_map *flow_map = bpf_object__find_map_by_name(obj, "flow_map");
     struct bpf_map *key_map = bpf_object__find_map_by_name(obj, "key_map");
     struct bpf_map *packet_ringbuf = bpf_object__find_map_by_name(obj, "packet_ringbuf");
+    struct bpf_map *port_filter = bpf_object__find_map_by_name(obj, "port_filter");
     
     // Set map file descriptors (can be -1 if maps don't exist)
     flow_map_fd = flow_map ? bpf_map__fd(flow_map) : -1;
     key_map_fd = key_map ? bpf_map__fd(key_map) : -1;
     packet_ringbuf_fd = packet_ringbuf ? bpf_map__fd(packet_ringbuf) : -1;
+    port_filter_fd = port_filter ? bpf_map__fd(port_filter) : -1;
     
     printf("BPF program loaded successfully\n");
     return 0;
@@ -371,10 +374,14 @@ void print_usage(const char *prog_name) {
     printf("  -i <interface>  Network interface to capture on (default: eth0)\n");
     printf("  -f <bpf_file>   BPF object file (default: tls_capture.bpf.o)\n");
     printf("  -p <pid>        Process ID to hook for SSL keys\n");
+    printf("  -P <port>       Target port to capture (default: 443, 8443)\n");
     printf("  -w <file>       Write captured packets to PCAP file\n");
     printf("  -h              Show this help message\n");
-    printf("\nExample:\n");
-    printf("  sudo %s -i eth0 -p 1234 -w capture.pcap\n", prog_name);
+    printf("\nEnvironment Variables:\n");
+    printf("  SSLKEYLOGFILE   Path to SSL key log file for decryption\n");
+    printf("\nExamples:\n");
+    printf("  sudo %s -i eth0 -P 8443\n", prog_name);
+    printf("  SSLKEYLOGFILE=/tmp/keys.txt sudo %s -i eth0 -w capture.pcap\n", prog_name);
 }
 
 int main(int argc, char **argv) {
@@ -382,11 +389,12 @@ int main(int argc, char **argv) {
     const char *bpf_file = "tls_capture.bpf.o";
     const char *pcap_file = NULL;
     pid_t target_pid = 0;
+    __u16 target_port = 0;
     int opt;
     int ifindex = -1;
     
     // Parse command line arguments
-    while ((opt = getopt(argc, argv, "i:f:p:w:h")) != -1) {
+    while ((opt = getopt(argc, argv, "i:f:p:P:w:h")) != -1) {
         switch (opt) {
             case 'i':
                 interface = optarg;
@@ -396,6 +404,9 @@ int main(int argc, char **argv) {
                 break;
             case 'p':
                 target_pid = atoi(optarg);
+                break;
+            case 'P':
+                target_port = (__u16)atoi(optarg);
                 break;
             case 'w':
                 pcap_file = optarg;
@@ -425,6 +436,11 @@ int main(int argc, char **argv) {
     if (target_pid > 0) {
         printf("Target PID: %d\n", target_pid);
     }
+    if (target_port > 0) {
+        printf("Target Port: %d\n", target_port);
+    } else {
+        printf("Target Ports: 443, 8443 (default)\n");
+    }
     if (pcap_file) {
         printf("PCAP file: %s\n", pcap_file);
         // Create PCAP file with header
@@ -449,12 +465,41 @@ int main(int argc, char **argv) {
         return 1;
     }
     
-    // Set up SSL hooks if target PID is specified
-    if (target_pid > 0) {
-        printf("Setting up SSL hooks for PID %d...\n", target_pid);
-        if (setup_ssl_hooks() < 0) {
-            fprintf(stderr, "Warning: Failed to set up SSL hooks\n");
+    // Set port filter if specified
+    if (target_port > 0 && port_filter_fd >= 0) {
+        __u32 key = 0;
+        int ret = bpf_map_update_elem(port_filter_fd, &key, &target_port, BPF_ANY);
+        if (ret == 0) {
+            printf("Port filter set to: %d\n", target_port);
+            
+            // Verify the port filter was set correctly
+            __u16 verify_port = 0;
+            int verify_ret = bpf_map_lookup_elem(port_filter_fd, &key, &verify_port);
+            if (verify_ret == 0) {
+                printf("Port filter verification: %d (expected: %d)\n", verify_port, target_port);
+            } else {
+                printf("Warning: Failed to verify port filter: %d\n", verify_ret);
+            }
+        } else {
+            printf("Warning: Failed to set port filter: %d\n", ret);
         }
+    } else if (target_port > 0) {
+        printf("Warning: Port filter specified but BPF map not available\n");
+    }
+    
+    // Debug: Print target_port and port_filter_fd values
+    printf("Debug: target_port=%d, port_filter_fd=%d\n", target_port, port_filter_fd);
+    
+    // Set up SSL hooks and SSLKEYLOGFILE monitoring
+    printf("Setting up SSL hooks and SSLKEYLOGFILE monitoring...\n");
+    if (setup_ssl_hooks() < 0) {
+        fprintf(stderr, "Warning: Failed to set up SSL hooks\n");
+    }
+    
+    // Additional setup for target PID if specified
+    if (target_pid > 0) {
+        printf("Target PID specified: %d\n", target_pid);
+        // SSL hooks already set up above
     }
     
     // Set up ring buffer for receiving packets (only if packet_ringbuf exists)

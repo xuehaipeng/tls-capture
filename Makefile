@@ -1,7 +1,7 @@
 CC = clang
 CFLAGS = -O2 -g -Wall -Wextra
-BPF_CFLAGS = -O2 -g -target bpf -D__TARGET_ARCH_arm64 -D__BPF_TRACING__
-INCLUDES = -I/usr/include -I/usr/include/aarch64-linux-gnu -Isrc -I/usr/include/arm-linux-gnueabihf
+BPF_CFLAGS = -O2 -g -target bpf -D__TARGET_ARCH_x86_64 -D__BPF_TRACING__
+INCLUDES = -I/usr/include -I/usr/include/x86_64-linux-gnu -Isrc
 LIBS = -lbpf -lssl -lcrypto -lpthread -lpcap
 
 # Source files
