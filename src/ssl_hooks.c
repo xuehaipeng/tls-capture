@@ -15,6 +15,7 @@ static pthread_t keylog_thread;
 static int keylog_running = 0;
 static int inotify_fd = -1;
 static int watch_fd = -1;
+static time_t last_file_mod_time = 0;
 
 int setup_ssl_hooks(void) {
     printf("Setting up SSL hooks for key extraction...\n");
@@ -239,6 +240,16 @@ int read_sslkeylog_file(void) {
         return 0;
     }
     
+    // Check if file has been modified since last read
+    struct stat file_stat;
+    if (stat(sslkeylog_file, &file_stat) == 0) {
+        if (file_stat.st_mtime <= last_file_mod_time) {
+            // File hasn't been modified, no need to re-read
+            return 0;
+        }
+        last_file_mod_time = file_stat.st_mtime;
+    }
+    
     file = fopen(sslkeylog_file, "r");
     if (!file) {
         return 0;
@@ -273,8 +284,19 @@ int read_sslkeylog_file(void) {
     }
     
     fclose(file);
-    printf("Loaded %d SSL keys from SSLKEYLOGFILE\n", keys_loaded);
+    if (keys_loaded > 0) {
+        printf("Loaded %d SSL keys from SSLKEYLOGFILE\n", keys_loaded);
+    }
     return keys_loaded;
+}
+
+// Thread function to periodically check SSLKEYLOGFILE for updates
+void* sslkeylog_monitor_thread(void* arg) {
+    while (keylog_running) {
+        read_sslkeylog_file();
+        sleep(1); // Check every second
+    }
+    return NULL;
 }
 
 // Setup SSLKEYLOGFILE monitoring
@@ -302,6 +324,14 @@ int setup_sslkeylog_monitoring(void) {
     
     // Try to read existing keys
     read_sslkeylog_file();
+    
+    // Start monitoring thread
+    keylog_running = 1;
+    if (pthread_create(&keylog_thread, NULL, sslkeylog_monitor_thread, NULL) != 0) {
+        perror("Failed to create SSLKEYLOGFILE monitoring thread");
+        keylog_running = 0;
+        return -1;
+    }
     
     printf("✅ SSLKEYLOGFILE monitoring setup complete\n");
     return 0;

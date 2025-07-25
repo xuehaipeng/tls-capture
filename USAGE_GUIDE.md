@@ -8,7 +8,7 @@ This tool provides real-time TLS/HTTPS traffic capture and decryption using eBPF
 
 ✅ **eBPF XDP Packet Capture** - High-performance kernel-level packet filtering  
 ✅ **Port-specific Traffic Filtering** - Configurable port targeting  
-✅ **SSLKEYLOGFILE Integration** - Automatic SSL key extraction and parsing  
+✅ **SSLKEYLOGFILE Integration** - Automatic SSL key extraction and parsing with real-time monitoring  
 ✅ **Real-time TLS Decryption** - Full TLS 1.2/1.3 support with AES-GCM  
 ✅ **HTTP Content Analysis** - Automatic HTTP parsing from decrypted data  
 ✅ **PCAP Export** - Save captured traffic for analysis  

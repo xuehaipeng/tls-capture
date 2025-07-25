@@ -9,7 +9,7 @@ A Linux-based tool that captures TLS/HTTPS traffic and decodes encrypted packets
 ## Features
 
 - ✅ Real-time TLS/HTTPS traffic capture using eBPF XDP
-- ✅ SSL key extraction framework (requires uprobe implementation)
+- ✅ SSL key extraction from SSLKEYLOGFILE with real-time monitoring
 - ✅ TLS 1.2 and 1.3 record parsing
 - ✅ PCAP file generation for offline analysis
 - ✅ Minimal performance impact
@@ -17,7 +17,7 @@ A Linux-based tool that captures TLS/HTTPS traffic and decodes encrypted packets
 ## Features
 
 - Real-time TLS/HTTPS traffic capture using eBPF XDP
-- SSL key extraction from OpenSSL applications
+- SSL key extraction from SSLKEYLOGFILE with real-time monitoring
 - TLS 1.2 and 1.3 support
 - Packet decryption and plain text output
 - Minimal performance impact

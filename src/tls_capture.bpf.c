@@ -124,16 +124,22 @@ int tls_packet_capture(struct xdp_md *ctx) {
     
     if (target_port && *target_port != 0) {
         // Port filter is set, only capture traffic on specified port
+        bpf_printk("BPF: Port filter active: target=%d, src=%d, dst=%d\n", *target_port, tcp_source, tcp_dest);
         if (tcp_source != *target_port && tcp_dest != *target_port) {
+            bpf_printk("BPF: Port filter rejecting packet\n");
             return XDP_PASS;  // Skip non-target ports
         }
+        bpf_printk("BPF: Port filter accepting packet\n");
         // Port matches, continue processing
     } else {
         // No port filter, default to HTTPS ports (443, 8443)
+        bpf_printk("BPF: No port filter, checking default HTTPS ports: src=%d, dst=%d\n", tcp_source, tcp_dest);
         if (tcp_source != 443 && tcp_source != 8443 && 
             tcp_dest != 443 && tcp_dest != 8443) {
+            bpf_printk("BPF: Default filter rejecting packet\n");
             return XDP_PASS;  // Skip non-HTTPS ports
         }
+        bpf_printk("BPF: Default filter accepting packet\n");
         // HTTPS port detected, continue processing
     }
     
