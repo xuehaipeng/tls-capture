@@ -40,6 +40,33 @@ The Minimum Viable Product (MVP) has been successfully implemented with a workin
 - **Packet Processor**: Decryption and reassembly
 - **Output Handler**: Plain text formatting and export
 
+## ✅ Current Status
+
+### MVP Implementation Complete
+The Minimum Viable Product (MVP) has been successfully implemented with a working foundation:
+- ✅ Basic XDP program for packet capture
+- ✅ eBPF maps for flow tracking and key storage
+- ✅ Userspace application with command-line interface
+- ✅ BPF program loading and XDP attachment
+- ✅ TLS packet filtering and capture
+- ✅ Ring buffer data transfer to userspace
+
+## Technical Architecture
+
+### 1. Core Components
+
+#### 1.1 eBPF Programs
+- **Packet Capture Module**: XDP/TC-based packet interception
+- **TLS State Tracking**: Connection state management
+- **Key Extraction Module**: SSL/TLS key material extraction
+- **Decryption Engine**: Symmetric key decryption in userspace
+
+#### 1.2 Userspace Components
+- **Control Application**: Main orchestration and UI
+- **Key Management**: TLS key storage and lifecycle
+- **Packet Processor**: Decryption and reassembly
+- **Output Handler**: Plain text formatting and export
+
 ### 2. Implementation Strategy
 
 #### 2.1 TLS Key Extraction Methods

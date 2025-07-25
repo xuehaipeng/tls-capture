@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Successfully implemented a **Minimum Viable Product (MVP)** for a TLS/HTTPS traffic capture and decoding tool for Linux platforms. The project demonstrates core concepts of TLS traffic analysis, key extraction, and decryption simulation.
+This project is a nearly finished implementation of a TLS/HTTPS traffic capture and decoding tool for Linux platforms. The tool can capture TLS packets on a specified network interface and attempt to decrypt them using SSL keys extracted from target processes.
 
 ## ✅ What's New - BPF Program Loading and Attachment Working
 
@@ -11,7 +11,7 @@ The tool has achieved a significant milestone with successful BPF program loadin
 ## What Was Delivered
 
 ### 1. Comprehensive Design Document
-- **File**: `TLS_Traffic_Capture_Tool_Design.md`
+- **File**: `technical-design.md`
 - Complete technical architecture and implementation plan
 - 12-week phased development approach
 - Security considerations and risk assessment
@@ -37,7 +37,7 @@ The tool has achieved a significant milestone with successful BPF program loadin
 tls-capture-tool/
 ├── README.md                          # User documentation
 ├── PROJECT_SUMMARY.md                 # This summary
-├── TLS_Traffic_Capture_Tool_Design.md # Technical design
+├── .specs/technical-design.md # Technical design
 ├── Makefile                          # Build system (eBPF version)
 ├── Makefile.demo                     # Build system (MVP)
 ├── demo_test.sh                      # Demo script
@@ -274,7 +274,7 @@ The project successfully bridges the gap between theoretical TLS analysis and pr
 ### ✅ BPF Implementation
 ```bash
 sudo ./tls_capture -i lo    # ✅ Run with BPF program loading
-sudo ./tls_capture -i eth0  # ✅ Run with specific interface
+sudo ./tls_capture -i enp0s1  # ✅ Run with specific interface
 ```
 
 ### Documentation

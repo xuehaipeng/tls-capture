@@ -27,6 +27,8 @@ int decrypt_tls_data(const struct packet_info *pkt, const struct ssl_key_info *k
                      char *output, size_t output_size);
 int parse_tls_record(const __u8 *data, size_t len, struct tls_record_header *header);
 void print_decrypted_data(const char *data, size_t len);
+const char* get_tls_record_type_name(int type);
+const char* get_tls_version_name(int version);
 void cleanup_and_exit(int sig);
 
 // Global variables

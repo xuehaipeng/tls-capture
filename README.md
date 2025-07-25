@@ -4,6 +4,18 @@ A Linux-based tool that captures TLS/HTTPS traffic and decodes encrypted packets
 
 ## Current Status
 
+This project is a nearly finished implementation of a TLS traffic capture and decryption tool. The tool can capture TLS packets on a specified network interface and attempt to decrypt them using SSL keys extracted from target processes.
+
+## Features
+
+- Real-time TLS/HTTPS traffic capture using eBPF XDP
+- SSL key extraction from OpenSSL applications
+- TLS 1.2 and 1.3 support
+- Packet decryption and plain text output
+- Minimal performance impact
+
+## Current Status
+
 ✅ **MVP Implementation Complete**: The tool now has a working foundation with functional BPF packet capture capabilities. The XDP program successfully loads, attaches to network interfaces, and captures TLS packets.
 
 ## Features
