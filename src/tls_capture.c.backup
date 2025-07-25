@@ -188,30 +188,10 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
     int ret;
     
     // Print basic packet info
-    // Determine direction based on port numbers
-    __u16 src_port = ntohs(pkt->flow.src_port);
-    __u16 dst_port = ntohs(pkt->flow.dst_port);
-    
-    // For better display, show client -> server direction
-    if (dst_port == 443) {
-        // Client to server
-        printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
-               inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), src_port,
-               inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), dst_port,
-               pkt->payload_len);
-    } else if (src_port == 443) {
-        // Server to client
-        printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
-               inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), src_port,
-               inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), dst_port,
-               pkt->payload_len);
-    } else {
-        // Fallback to original display
-        printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
-               inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), src_port,
-               inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), dst_port,
-               pkt->payload_len);
-    }
+    printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
+           inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), ntohs(pkt->flow.src_port),
+           inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), ntohs(pkt->flow.dst_port),
+           pkt->payload_len);
     
     // Write packet to PCAP file if it's open
     if (pcap_fd >= 0) {
@@ -244,11 +224,6 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
                get_tls_record_type_name(tls_hdr.type),
                get_tls_version_name(tls_hdr.version),
                tls_hdr.length);
-        
-        // Try to detect if this is HTTP traffic
-        if (tls_hdr.type == TLS_APPLICATION_DATA) {
-            printf("🔍 TLS Application Data detected (potential HTTP content)\n");
-        }
     }
     
     // Look up SSL keys for this flow (only if key_map exists)
@@ -258,47 +233,13 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
             // Attempt to decrypt the packet
             ret = decrypt_tls_data(pkt, &key_info, decrypted_data, sizeof(decrypted_data));
             if (ret > 0) {
-                printf("🔓 Decrypted TLS data (%d bytes):\n", ret);
-                
-                // Check if decrypted data looks like HTTP
-                if (ret > 4 && (strncmp(decrypted_data, "GET ", 4) == 0 || 
-                               strncmp(decrypted_data, "POST", 4) == 0 ||
-                               strncmp(decrypted_data, "HTTP", 4) == 0 ||
-                               strncmp(decrypted_data, "HEAD", 4) == 0 ||
-                               strncmp(decrypted_data, "PUT ", 4) == 0 ||
-                               strncmp(decrypted_data, "DELE", 4) == 0)) {
-                    printf("🌐 HTTP Traffic Detected:\n");
-                    printf("=== HTTP CONTENT ===\n");
-                    // Print HTTP headers and body
-                    for (int i = 0; i < ret && i < 1024; i++) {
-                        putchar(decrypted_data[i]);
-                        if (i > 4 && decrypted_data[i-3] == '\r' && decrypted_data[i-2] == '\n' &&
-                            decrypted_data[i-1] == '\r' && decrypted_data[i] == '\n') {
-                            // End of HTTP headers, add separator before body
-                            printf("\n--- HTTP BODY ---\n");
-                        }
-                    }
-                    if (ret > 1024) {
-                        printf("\n... (truncated, %d more bytes)\n", ret - 1024);
-                    }
-                    printf("\n=== END HTTP CONTENT ===\n");
-                } else {
-                    // Not HTTP, show as generic decrypted data
-                    print_decrypted_data(decrypted_data, ret);
-                }
+                printf("Decrypted data (%d bytes):\n", ret);
+                print_decrypted_data(decrypted_data, ret);
             } else {
-                printf("❌ Failed to decrypt packet (possibly wrong keys or encrypted with different parameters)\n");
-                // Still show raw TLS data for debugging
-                printf("Raw TLS data (first 64 bytes):\n");
-                for (int i = 0; i < pkt->payload_len && i < 64; i++) {
-                    printf("%02x ", pkt->payload[i]);
-                    if ((i + 1) % 16 == 0) printf("\n");
-                }
-                printf("\n");
+                printf("Failed to decrypt packet\n");
             }
         } else {
-            printf("🔐 No SSL keys found for this flow (encrypted traffic)\n");
-            printf("💡 To decrypt: Use -p <pid> to hook SSL process or provide keys manually\n");
+            printf("No SSL keys found for this flow\n");
             // Print raw TLS data for debugging
             printf("Raw TLS data (first 64 bytes):\n");
             for (int i = 0; i < pkt->payload_len && i < 64; i++) {
@@ -309,8 +250,6 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
         }
     } else {
         // If no key map, just print raw TLS data
-        printf("🔒 Encrypted TLS traffic (no key mapping available)\n");
-        printf("💡 To decrypt: Use -p <pid> to hook SSL process or provide keys manually\n");
         printf("Raw TLS data (first 64 bytes):\n");
         for (int i = 0; i < pkt->payload_len && i < 64; i++) {
             printf("%02x ", pkt->payload[i]);
@@ -439,14 +378,8 @@ int main(int argc, char **argv) {
                 break;
             }
             if (err < 0) {
-                // Check if it's a recoverable error
-                if (err == -EAGAIN || err == -EWOULDBLOCK) {
-                    continue; // Non-fatal, continue polling
-                }
                 fprintf(stderr, "Error polling ring buffer: %d\n", err);
-                // Don't break on error, continue polling
-                // This prevents the tool from exiting on transient errors
-                usleep(10000); // Sleep 10ms to avoid busy loop
+                break;
             }
         }
     } else {

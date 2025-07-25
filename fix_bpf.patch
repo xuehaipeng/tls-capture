@@ -1,0 +1,24 @@
+--- a/src/tls_capture.bpf.c
++++ b/src/tls_capture.bpf.c
+@@ -180,10 +180,15 @@
+     }
+     
+     // Use bpf_probe_read for safer memory access
+-    long ret = bpf_probe_read(pkt_info->payload, copy_len, payload);
+-    if (ret != 0) {
+-        bpf_ringbuf_discard(pkt_info, 0);
+-        return XDP_PASS;
++    // Direct memory copy for XDP context
++    for (int i = 0; i < copy_len && i < 1500; i++) {
++        if (payload + i + 1 > data_end) {
++            copy_len = i;
++            break;
++        }
++        pkt_info->payload[i] = *((char*)payload + i);
++    }
++    if (copy_len == 0) {
++        bpf_ringbuf_discard(pkt_info, 0);
++        return XDP_PASS;
+     }
+     
+     pkt_info->payload_len = copy_len;

@@ -1,0 +1,51 @@
+--- a/src/tls_capture.c
++++ b/src/tls_capture.c
+@@ -193,15 +193,8 @@
+            pkt->payload_len);
+     
+     // Write packet to PCAP file if it's open
+-    if (pcap_fd >= 0) {
+-        struct pcap_packet_header pkthdr;
+-        struct timeval tv;
+-        gettimeofday(&tv, NULL);
+-        
+-        pkthdr.ts_sec = tv.tv_sec;
+-        pkthdr.ts_usec = tv.tv_usec;
+-        pkthdr.incl_len = pkt->payload_len;
+-        pkthdr.orig_len = pkt->payload_len;
+-        
+-        // Write packet header
+-        ssize_t written = write(pcap_fd, &pkthdr, sizeof(pkthdr));
+-        if (written == sizeof(pkthdr)) {
+-            // Write packet data
+-            write(pcap_fd, pkt->payload, pkt->payload_len);
+-            fsync(pcap_fd); // Ensure data is written to disk
+-        }
++    if (pcap_fd >= 0 && write_packet_to_pcap(pcap_fd, pkt) < 0) {
++        printf(Warning: Failed to write packet to PCAP filen);
+     }
+     
++    // Try to parse as HTTP content
++    if (try_decrypt_and_parse_http(pkt, NULL)) {
++        // HTTP content was found and displayed
++    } else {
++        // Not HTTP or couldn't decrypt, show TLS info
++        parse_tls_record_info(pkt);
++    }
++    
++    printf(----------------------------------------n);
++    return 0;
++}
++
++void parse_tls_record_info(const struct packet_info *pkt) {
+     // Parse TLS record header
+     if (pkt->payload_len >= TLS_RECORD_HEADER_SIZE) {
+         struct tls_record_header tls_hdr;
+@@ -248,8 +241,6 @@
+         }
+         printf(n);
+     }
+-    
+-    printf(----------------------------------------n);
+-    return 0;
+ }

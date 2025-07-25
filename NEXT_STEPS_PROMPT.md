@@ -4,17 +4,6 @@
 
 You are continuing work on a **TLS Traffic Capture and Decryption Tool** for Linux platforms. This tool captures TLS/HTTPS traffic in real-time and decrypts encrypted packets into plain text using eBPF (Extended Berkeley Packet Filter) technology.
 
-### Current Status
-
-The project has successfully reached **Enhanced MVP (Minimum Viable Product)** status with:
-- ✅ Working BPF program that loads and attaches to network interfaces
-- ✅ XDP program for high-performance packet capture
-- ✅ TLS packet filtering (ports 443, 8443)
-- ✅ TLS record type validation (20-23)
-- ✅ Flow tracking using BPF maps
-- ✅ Ring buffer data transfer to userspace
-- ✅ Command-line interface with signal handling
-
 ### Project Goals
 
 The ultimate goal is to create a production-ready tool that can:
@@ -127,11 +116,9 @@ Additional features for production readiness:
 - Various files as needed
 
 **Requirements:**
+- Add PCAP file generation with decrypted content
 - Add support for multiple network interfaces
 - Implement process-specific SSL key targeting
-- Add performance monitoring and statistics
-- Implement configuration file support
-- Add PCAP file generation with decrypted content
 
 ## How to Test and Debug
 
@@ -162,6 +149,8 @@ The project is designed to run on ARM64 Linux targets. Use the provided scripts:
    ```bash
    curl -k https://httpbin.org/get
    ```
+
+remember don't directly write code via SSH to remote host, instead, write the code file locally and then scp it to the remote host
 
 ### Debugging BPF Programs
 

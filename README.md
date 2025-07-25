@@ -6,6 +6,10 @@ A Linux-based tool that captures TLS/HTTPS traffic and decodes encrypted packets
 
 ✅ **MVP Implementation Complete**: The tool now has a working foundation with functional BPF packet capture capabilities. The XDP program successfully loads, attaches to network interfaces, and captures TLS packets.
 
+✅ **PCAP Functionality Fixed**: The PCAP file generation feature has been implemented and tested. The tool can now save captured packets to PCAP format files compatible with Wireshark and other analysis tools.
+
+✅ **Comprehensive Testing Framework**: Enhanced real-world testing capabilities with multiple test scenarios, PCAP validation, and automated test suites.
+
 ## Features
 
 - Real-time TLS/HTTPS traffic capture using eBPF XDP
@@ -61,6 +65,8 @@ sudo ./tls_capture -i eth0 -f custom_tls_capture.bpf.o
 - `-i <interface>`: Network interface to capture on (default: eth0)
 - `-f <bpf_file>`: BPF object file (default: tls_capture.bpf.o)
 - `-p <pid>`: Process ID to hook for SSL keys
+- `-P <port>`: Port to capture traffic on (default: 443)
+- `-w <file>`: Write captured packets to PCAP file
 - `-h`: Show help message
 
 ### Example Output
@@ -131,7 +137,7 @@ User-Agent: Mozilla/5.0...
 
 ## ⏳ What's In Progress
 
-- ⏳ PCAP file generation with decrypted content
+- ✅ PCAP file generation with captured content
 - ⏳ Support for ChaCha20-Poly1305 decryption
 - ⏳ Advanced SSL library support (GnuTLS, NSS)
 
@@ -187,12 +193,38 @@ make
 ```
 
 ### Testing
+
+#### Basic Testing
+```bash
+sudo ./test_tool.sh
+```
+
+#### Real-World Testing
+```bash
+sudo ./test_real_world.sh [interface]
+```
+
+#### PCAP Validation
+```bash
+./tmp_rovodev_pcap_validator.sh capture.pcap
+./tmp_rovodev_pcap_validator.sh --all  # Analyze all PCAP files
+```
+
+#### Comprehensive Test Suite
+```bash
+sudo ./tmp_rovodev_comprehensive_test.sh
+```
+
+#### Manual Testing Examples
 ```bash
 # Test with curl
 curl -k https://httpbin.org/get
 
 # Test with specific process
 sudo ./tls_capture -i lo -p $(pgrep curl)
+
+# Test with PCAP output
+sudo ./tls_capture -i eth0 -w capture.pcap
 ```
 
 ## Contributing

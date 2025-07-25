@@ -136,7 +136,7 @@ int attach_xdp_program(const char *interface) {
     bpf_xdp_detach(ifindex, 0, NULL);
     
     // Now try to attach the new program
-    int err = bpf_xdp_attach(ifindex, bpf_prog_fd, 0, NULL);
+    int err = bpf_xdp_attach(ifindex, bpf_prog_fd, XDP_FLAGS_REPLACE, NULL);
     if (err) {
         fprintf(stderr, "Failed to attach XDP program to %s: %d\n", interface, err);
         return -1;
@@ -188,30 +188,10 @@ static int handle_packet(void *ctx, void *data, size_t data_sz) {
     int ret;
     
     // Print basic packet info
-    // Determine direction based on port numbers
-    __u16 src_port = ntohs(pkt->flow.src_port);
-    __u16 dst_port = ntohs(pkt->flow.dst_port);
-    
-    // For better display, show client -> server direction
-    if (dst_port == 443) {
-        // Client to server
-        printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
-               inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), src_port,
-               inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), dst_port,
-               pkt->payload_len);
-    } else if (src_port == 443) {
-        // Server to client
-        printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
-               inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), src_port,
-               inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), dst_port,
-               pkt->payload_len);
-    } else {
-        // Fallback to original display
-        printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
-               inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), src_port,
-               inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), dst_port,
-               pkt->payload_len);
-    }
+    printf("Captured TLS packet: %s:%d -> %s:%d, len=%d\n",
+           inet_ntoa(*(struct in_addr*)&pkt->flow.src_ip), ntohs(pkt->flow.src_port),
+           inet_ntoa(*(struct in_addr*)&pkt->flow.dst_ip), ntohs(pkt->flow.dst_port),
+           pkt->payload_len);
     
     // Write packet to PCAP file if it's open
     if (pcap_fd >= 0) {

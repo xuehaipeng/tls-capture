@@ -1,25 +1,7 @@
 #include "simple_bpf_types.h"
-
-// XDP return codes
-#define XDP_PASS 2
-#define XDP_DROP 1
-
-// TLS record types
-#define TLS_CHANGE_CIPHER_SPEC 20
-#define TLS_ALERT 21
-#define TLS_HANDSHAKE 22
-#define TLS_APPLICATION_DATA 23
-
-// TLS versions
-#define TLS_VERSION_1_2 0x0303
-#define TLS_VERSION_1_3 0x0304
-
-// TLS record header
-struct tls_record_header {
-    __u8 type;
-    __u16 version;
-    __u16 length;
-} __attribute__((packed));
+#include "common.h"
+#include <bpf/bpf_helpers.h>
+#include <bpf/bpf_tracing.h>
 
 // Flow key structure
 struct flow_key {
@@ -55,153 +37,220 @@ struct packet_info {
     __u32 seq_num;
     __u32 ack_num;
     __u16 payload_len;
-    __u8 payload[1500];
+    __u8 payload[MAX_PACKET_SIZE];
     __u64 timestamp;
 };
 
 // Maps
-struct bpf_map_def SEC("maps") flow_map = {
-    .type = BPF_MAP_TYPE_HASH,
-    .key_size = sizeof(struct flow_key),
-    .value_size = sizeof(struct flow_state),
-    .max_entries = 1024,
-};
+struct {
+    __uint(type, BPF_MAP_TYPE_HASH);
+    __uint(max_entries, MAX_FLOWS);
+    __type(key, struct flow_key);
+    __type(value, struct flow_state);
+} flow_map SEC(".maps");
 
-struct bpf_map_def SEC("maps") key_map = {
-    .type = BPF_MAP_TYPE_HASH,
-    .key_size = sizeof(struct flow_key),
-    .value_size = sizeof(struct ssl_key_info),
-    .max_entries = 256,
-};
+struct {
+    __uint(type, BPF_MAP_TYPE_HASH);
+    __uint(max_entries, MAX_KEYS);
+    __type(key, struct flow_key);
+    __type(value, struct ssl_key_info);
+} key_map SEC(".maps");
 
-struct bpf_map_def SEC("maps") packet_ringbuf = {
-    .type = BPF_MAP_TYPE_RINGBUF,
-    .max_entries = 256 * 1024,
-};
+struct {
+    __uint(type, BPF_MAP_TYPE_RINGBUF);
+    __uint(max_entries, 256 * 1024);
+} packet_ringbuf SEC(".maps");
 
-// Helper function to check if it's TLS traffic
-static inline int is_tls_traffic(struct flow_key *flow) {
-    return (flow->dst_port == 443 || flow->src_port == 443 ||
-            flow->dst_port == 8443 || flow->src_port == 8443);
+// Tracepoint for SSL_write function
+SEC("uprobe/SSL_write")
+int trace_ssl_write(struct pt_regs *ctx) {
+    // This would extract SSL keys when SSL_write is called
+    // In a real implementation, we would extract the SSL structure
+    // and master secret from the function arguments
+    
+    __u64 pid_tgid = bpf_get_current_pid_tgid();
+    __u32 pid = pid_tgid >> 32;
+    __u32 tid = (__u32)pid_tgid;
+    
+    // For demonstration, we'll just log that SSL_write was called
+    bpf_printk("SSL_write called by PID %d\n", pid);
+    
+    // In a real implementation, we would:
+    // 1. Extract SSL structure from function arguments
+    // 2. Extract master secret and other key material
+    // 3. Store in key_map with appropriate flow key
+    
+    return 0;
 }
 
-// Helper function to parse TLS header
-static inline int parse_tls_header(void *data, void *data_end, struct tls_record_header *tls_hdr) {
-    __u8 *bytes = (__u8 *)data;
+// Tracepoint for SSL_read function
+SEC("uprobe/SSL_read")
+int trace_ssl_read(struct pt_regs *ctx) {
+    // This would extract SSL keys when SSL_read is called
+    __u64 pid_tgid = bpf_get_current_pid_tgid();
+    __u32 pid = pid_tgid >> 32;
+    __u32 tid = (__u32)pid_tgid;
     
-    if ((void *)bytes + 5 > data_end)
-        return -1;
-    
-    tls_hdr->type = bytes[0];
-    tls_hdr->version = (bytes[1] << 8) | bytes[2];
-    tls_hdr->length = (bytes[3] << 8) | bytes[4];
-    
-    // Validate TLS record type
-    if (tls_hdr->type < TLS_CHANGE_CIPHER_SPEC || tls_hdr->type > TLS_APPLICATION_DATA)
-        return -1;
-    
-    // Validate TLS version
-    if (tls_hdr->version != TLS_VERSION_1_2 && tls_hdr->version != TLS_VERSION_1_3)
-        return -1;
+    // For demonstration, we'll just log that SSL_read was called
+    bpf_printk("SSL_read called by PID %d\n", pid);
     
     return 0;
 }
 
 SEC("xdp")
 int tls_packet_capture(struct xdp_md *ctx) {
-    void *data_end = (void *)(long)ctx->data_end;
     void *data = (void *)(long)ctx->data;
-    
-    // Basic packet size check
-    if (data + 14 + 20 + 20 > data_end) // ETH + IP + TCP headers minimum
-        return XDP_PASS;
+    void *data_end = (void *)(long)ctx->data_end;
+    struct ethhdr *eth;
+    struct iphdr *ip;
+    struct tcphdr *tcp;
+    __u16 eth_type;
+    __u8 ip_proto;
+    __u16 tcp_source, tcp_dest;
+    __u16 payload_len;
+    void *payload;
+    struct flow_key flow_key;
+    struct flow_state *flow_state;
+    struct flow_state new_flow_state = {0};
+    struct packet_info *pkt_info;
     
     // Parse Ethernet header
-    struct ethhdr *eth = (struct ethhdr *)data;
-    if (eth->h_proto != __builtin_bswap16(ETH_P_IP))
+    eth = data;
+    if (data + sizeof(*eth) > data_end) {
         return XDP_PASS;
+    }
+    
+    eth_type = eth->h_proto;
+    
+    // Check for IPv4
+    if (eth_type != 0x0800) {  // ETH_P_IP
+        return XDP_PASS;
+    }
     
     // Parse IP header
-    struct iphdr *ip = (struct iphdr *)(data + 14);
-    if (ip->protocol != IPPROTO_TCP)
+    ip = data + sizeof(*eth);
+    if (data + sizeof(*eth) + sizeof(*ip) > data_end) {
         return XDP_PASS;
+    }
+    
+    // Check for TCP
+    ip_proto = ip->protocol;
+    if (ip_proto != IPPROTO_TCP) {
+        return XDP_PASS;
+    }
     
     // Parse TCP header
     __u8 ip_hdr_len = ip->ihl * 4;
-    if (ip_hdr_len < 20 || ip_hdr_len > 60)
+    if (ip_hdr_len < 20 || ip_hdr_len > 60) {
         return XDP_PASS;
+    }
     
-    struct tcphdr *tcp = (void *)ip + ip_hdr_len;
-    __u8 tcp_hdr_len = tcp->doff * 4;
-    if (tcp_hdr_len < 20 || tcp_hdr_len > 60)
+    tcp = (void *)ip + ip_hdr_len;
+    if ((void *)tcp + sizeof(*tcp) > data_end) {
         return XDP_PASS;
+    }
+    
+    // Get TCP ports
+    tcp_source = tcp->source;
+    tcp_dest = tcp->dest;
+    
+    // Check for HTTPS ports (443, 8443)
+    if (tcp_source != 443 && tcp_source != 8443 && 
+        tcp_dest != 443 && tcp_dest != 8443) {
+        return XDP_PASS;
+    }
+    
+    // Calculate TCP header length
+    __u8 tcp_hdr_len = tcp->doff * 4;
+    if (tcp_hdr_len < 20 || tcp_hdr_len > 60) {
+        return XDP_PASS;
+    }
+    
+    // Calculate payload
+    payload = (void *)tcp + tcp_hdr_len;
+    if (payload > data_end) {
+        return XDP_PASS;
+    }
+    
+    payload_len = data_end - payload;
+    if (payload_len == 0) {
+        return XDP_PASS;
+    }
+    
+    // Check if it looks like TLS (first byte should be a valid TLS record type)
+    __u8 *first_byte = payload;
+    if (payload + 1 > data_end) {
+        return XDP_PASS;
+    }
+    
+    // TLS record types: 20-23
+    if (*first_byte < 20 || *first_byte > 23) {
+        return XDP_PASS;
+    }
     
     // Create flow key
-    struct flow_key flow = {0};
-    flow.src_ip = ip->saddr;
-    flow.dst_ip = ip->daddr;
-    flow.src_port = __builtin_bswap16(tcp->source);
-    flow.dst_port = __builtin_bswap16(tcp->dest);
-    flow.protocol = IPPROTO_TCP;
+    flow_key.src_ip = ip->saddr;
+    flow_key.dst_ip = ip->daddr;
+    flow_key.src_port = tcp_source;
+    flow_key.dst_port = tcp_dest;
+    flow_key.protocol = ip_proto;
     
-    // Check if it's TLS traffic
-    if (!is_tls_traffic(&flow))
+    // Look up or create flow state
+    flow_state = bpf_map_lookup_elem(&flow_map, &flow_key);
+    if (!flow_state) {
+        new_flow_state.last_seen = bpf_ktime_get_ns();
+        new_flow_state.client_seq = tcp->seq;
+        bpf_map_update_elem(&flow_map, &flow_key, &new_flow_state, BPF_ANY);
+    } else {
+        flow_state->last_seen = bpf_ktime_get_ns();
+    }
+    
+    // Reserve space in ring buffer for packet info
+    pkt_info = bpf_ringbuf_reserve(&packet_ringbuf, sizeof(struct packet_info), 0);
+    if (!pkt_info) {
         return XDP_PASS;
+    }
     
-    // Get or create flow state
-    struct flow_state *state = bpf_map_lookup_elem(&flow_map, &flow);
-    if (!state) {
-        struct flow_state new_state = {0};
-        new_state.last_seen = bpf_ktime_get_ns();
-        bpf_map_update_elem(&flow_map, &flow, &new_state, BPF_ANY);
-        state = bpf_map_lookup_elem(&flow_map, &flow);
-        if (!state)
+    // Copy flow key
+    pkt_info->flow = flow_key;
+    
+    // Copy TCP sequence and ack numbers
+    pkt_info->seq_num = tcp->seq;
+    pkt_info->ack_num = tcp->ack_seq;
+    
+    // Copy payload (limited to MAX_PACKET_SIZE)
+    __u16 copy_len = payload_len > MAX_PACKET_SIZE ? MAX_PACKET_SIZE : payload_len;
+    if ((__u64)payload + copy_len > (__u64)data_end) {
+        copy_len = (__u64)data_end - (__u64)payload;
+    }
+    
+    // Limit copy length to prevent buffer overflow
+    if (copy_len > MAX_PACKET_SIZE) {
+        copy_len = MAX_PACKET_SIZE;
+    }
+    
+    // Ensure copy_len is within valid range
+    if (copy_len > 0 && copy_len <= MAX_PACKET_SIZE) {
+        // Use bpf_probe_read_kernel for safer memory access
+        long ret = bpf_probe_read_kernel(pkt_info->payload, copy_len, payload);
+        if (ret != 0) {
+            bpf_ringbuf_discard(pkt_info, 0);
             return XDP_PASS;
+        }
+    } else {
+        bpf_ringbuf_discard(pkt_info, 0);
+        return XDP_PASS;
     }
     
-    // Update last seen timestamp
-    state->last_seen = bpf_ktime_get_ns();
-    
-    // Calculate payload pointer
-    void *payload = (void *)tcp + tcp_hdr_len;
-    if (payload >= data_end)
-        return XDP_PASS;
-    
-    // Check for TLS record
-    struct tls_record_header tls_hdr;
-    if (parse_tls_header(payload, data_end, &tls_hdr) < 0)
-        return XDP_PASS;
-    
-    // Reserve space in ring buffer
-    struct packet_info *pkt_info = bpf_ringbuf_reserve(&packet_ringbuf, sizeof(struct packet_info), 0);
-    if (!pkt_info)
-        return XDP_PASS;
-    
-    // Fill packet info
-    pkt_info->flow = flow;
-    pkt_info->seq_num = __builtin_bswap32(tcp->seq);
-    pkt_info->ack_num = __builtin_bswap32(tcp->ack_seq);
+    // Set payload length
+    pkt_info->payload_len = copy_len;
     pkt_info->timestamp = bpf_ktime_get_ns();
-    
-    // Copy payload
-    __u32 payload_len = data_end - payload;
-    if (payload_len > 1500)
-        payload_len = 1500;
-    
-    pkt_info->payload_len = payload_len;
-    
-    // Safe copy of payload
-    for (int i = 0; i < 1500 && i < payload_len; i++) {
-        if ((void *)((__u8 *)payload + i) >= data_end)
-            break;
-        pkt_info->payload[i] = ((__u8 *)payload)[i];
-    }
     
     // Submit packet to ring buffer
     bpf_ringbuf_submit(pkt_info, 0);
     
+    // Pass packet to kernel for normal processing
     return XDP_PASS;
 }
 
-// License section
 char _license[] SEC("license") = "GPL";

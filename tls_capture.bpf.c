@@ -4,20 +4,56 @@
 #include <linux/ip.h>
 #include <linux/tcp.h>
 #include <linux/in.h>
-#include <linux/if_packet.h>
-#include "common.h"
+
+// Flow key structure
+struct flow_key {
+    __u32 src_ip;
+    __u32 dst_ip;
+    __u16 src_port;
+    __u16 dst_port;
+    __u8 protocol;
+};
+
+// Flow state structure
+struct flow_state {
+    __u32 client_seq;
+    __u32 server_seq;
+    __u8 tls_established;
+    __u8 key_extracted;
+    __u64 last_seen;
+};
+
+// SSL key information
+struct ssl_key_info {
+    __u8 master_secret[48];
+    __u8 client_random[32];
+    __u8 server_random[32];
+    __u16 cipher_suite;
+    __u64 timestamp;
+    __u32 valid;
+};
+
+// Packet information
+struct packet_info {
+    struct flow_key flow;
+    __u32 seq_num;
+    __u32 ack_num;
+    __u16 payload_len;
+    __u8 payload[1500];
+    __u64 timestamp;
+};
 
 // Maps
 struct {
     __uint(type, BPF_MAP_TYPE_HASH);
-    __uint(max_entries, MAX_FLOWS);
+    __uint(max_entries, 1024);
     __type(key, struct flow_key);
     __type(value, struct flow_state);
 } flow_map SEC(".maps");
 
 struct {
     __uint(type, BPF_MAP_TYPE_HASH);
-    __uint(max_entries, MAX_KEYS);
+    __uint(max_entries, 256);
     __type(key, struct flow_key);
     __type(value, struct ssl_key_info);
 } key_map SEC(".maps");
@@ -27,7 +63,7 @@ struct {
     __uint(max_entries, 256 * 1024);
 } packet_ringbuf SEC(".maps");
 
-// Global variable for target port (default 443 for HTTPS)
+// Global variable for target port (default 443)
 volatile const __u16 target_port = 443;
 
 SEC("xdp")
@@ -47,13 +83,9 @@ int tls_packet_capture(struct xdp_md *ctx) {
     struct flow_state new_flow_state = {0};
     struct packet_info *pkt_info;
     
-    // Debug output
-    bpf_printk("BPF program called\n");
-    
     // Parse Ethernet header
     eth = data;
     if (data + sizeof(*eth) > data_end) {
-        bpf_printk("Ethernet header too short\n");
         return XDP_PASS;
     }
     
@@ -61,34 +93,29 @@ int tls_packet_capture(struct xdp_md *ctx) {
     
     // Check for IPv4
     if (eth_type != 0x0800) {  // ETH_P_IP
-        bpf_printk("Not IPv4\n");
         return XDP_PASS;
     }
     
     // Parse IP header
     ip = data + sizeof(*eth);
     if (data + sizeof(*eth) + sizeof(*ip) > data_end) {
-        bpf_printk("IP header too short\n");
         return XDP_PASS;
     }
     
     // Check for TCP
     ip_proto = ip->protocol;
     if (ip_proto != IPPROTO_TCP) {
-        bpf_printk("Not TCP\n");
         return XDP_PASS;
     }
     
     // Parse TCP header
     __u8 ip_hdr_len = ip->ihl * 4;
     if (ip_hdr_len < 20 || ip_hdr_len > 60) {
-        bpf_printk("Invalid IP header length\n");
         return XDP_PASS;
     }
     
     tcp = (void *)ip + ip_hdr_len;
     if ((void *)tcp + sizeof(*tcp) > data_end) {
-        bpf_printk("TCP header too short\n");
         return XDP_PASS;
     }
     
@@ -96,19 +123,10 @@ int tls_packet_capture(struct xdp_md *ctx) {
     tcp_source = tcp->source;
     tcp_dest = tcp->dest;
     
-    // Debug output
-    bpf_printk("TCP packet: src_port=%d, dst_port=%d\n", tcp_source, tcp_dest);
-    
-    // Check for target port (443)
-    // Convert target_port to network byte order for comparison
-    __u16 target_port_net = __constant_htons(target_port);
-    if (tcp_source != target_port_net && tcp_dest != target_port_net) {
-        // Don't return XDP_PASS here, let's capture all TCP packets for debugging
-        // return XDP_PASS;
+    // Check for target port
+    if (tcp_source != target_port && tcp_dest != target_port) {
+        return XDP_PASS;
     }
-    
-    // Debug output
-    bpf_printk("Captured TLS packet: src_port=%d, dst_port=%d\n", tcp_source, tcp_dest);
     
     // Calculate TCP header length
     __u8 tcp_hdr_len = tcp->doff * 4;

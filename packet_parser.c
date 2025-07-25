@@ -1,5 +1,4 @@
 #include "tls_capture.h"
-#include <ctype.h>
 
 int parse_tls_record(const __u8 *data, size_t len, struct tls_record_header *header) {
     if (!data || !header || len < TLS_RECORD_HEADER_SIZE) {

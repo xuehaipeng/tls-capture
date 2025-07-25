@@ -17,19 +17,8 @@
 #include <openssl/aes.h>
 #include <openssl/rand.h>
 #include <pthread.h>
-#include <stdint.h>
+#include <pcap.h>
 #include "common.h"
-
-// Simple packet info structure to match BPF program
-struct simple_packet_info {
-    uint32_t src_ip;
-    uint32_t dst_ip;
-    uint16_t src_port;
-    uint16_t dst_port;
-    uint16_t payload_len;
-    uint8_t payload[1500];
-    uint64_t timestamp;
-};
 
 // Function declarations
 int load_bpf_program(const char *filename, __u16 target_port);
@@ -62,32 +51,4 @@ int derive_tls13_keys(const struct ssl_key_info *key_info, __u8 *enc_key, __u8 *
 int decrypt_aes_gcm(const __u8 *ciphertext, size_t ciphertext_len,
                     const __u8 *key, const __u8 *iv, __u8 *plaintext);
 
-// HTTP parsing functions
-int is_http_request(const char *data, size_t len);
-int is_http_response(const char *data, size_t len);
-void parse_and_display_http(const char *data, size_t len);
-
-// PCAP format functions
-int write_packet_to_pcap(int fd, const struct simple_packet_info *pkt);
-
 #endif // TLS_CAPTURE_H
-
-// TLS decryption functions
-int derive_tls12_traffic_keys(const uint8_t *master_secret, 
-                             const uint8_t *client_random,
-                             const uint8_t *server_random,
-                             uint8_t *client_write_key,
-                             uint8_t *server_write_key,
-                             uint8_t *client_write_iv,
-                             uint8_t *server_write_iv);
-
-int decrypt_aes_gcm_tls(const uint8_t *ciphertext, size_t ciphertext_len,
-                        const uint8_t *key, const uint8_t *iv,
-                        const uint8_t *aad, size_t aad_len,
-                        uint8_t *plaintext, size_t *plaintext_len);
-
-int try_decrypt_tls_application_data(const struct simple_packet_info *pkt,
-                                    char *decrypted_output,
-                                    size_t output_size);
-
-void analyze_tls_packet_with_decryption(const struct simple_packet_info *pkt);
